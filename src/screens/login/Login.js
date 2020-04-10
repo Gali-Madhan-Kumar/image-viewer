@@ -47,6 +47,8 @@ class Login extends Component {
 
     loginClickHandler = () => {
 
+        this.setState({ incorrectUsernamePassword: "dispNone" });
+
         this.state.username === "" ? this.setState({ usernameRequired: "dispBlock" }) : this.setState({ usernameRequired: "dispNone" });
         this.state.password === "" ? this.setState({ passwordRequired: "dispBlock" }) : this.setState({ passwordRequired: "dispNone" });
 

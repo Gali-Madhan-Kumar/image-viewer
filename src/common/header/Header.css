@@ -10,4 +10,22 @@
     margin: 10px;
     font-size: 18px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    flex: 1;
 } 
+
+.searchBox {
+    border-radius: 4px;
+    width: 300px;
+    background-color: #c0c0c0;
+    display: flex;
+}
+
+.searchIcon {
+    display: flex;
+    align-items: center;
+    margin: 2px;
+}
+
+.searchInput {
+    width: 90%;
+}
