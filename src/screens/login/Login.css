@@ -1,0 +1,20 @@
+.login-card {
+    display: flex;
+    justify-content: center;
+}
+
+#login-button {
+    margin-top: 30px;
+}
+
+.dispNone {
+    display: none;
+}
+
+.dispBlock {
+    display: block;
+}
+
+.red {
+    color: red;
+}

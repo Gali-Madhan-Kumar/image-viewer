@@ -1,0 +1,13 @@
+.app-header {
+    background-color: #263238;
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.app-logo {
+    color: #fff;
+    margin: 10px;
+    font-size: 18px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+} 
