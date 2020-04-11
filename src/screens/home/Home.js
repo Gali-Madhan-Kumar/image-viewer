@@ -8,14 +8,16 @@ import { withStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
 import Avatar from '@material-ui/core/Avatar';
 
-
 const styles = theme => ({
     imagePostCard: {
         width: '100%',
     },
     avatar: {
         margin: 10,
-    }
+    },
+    media: {
+        height: 350,
+    },
 });
 
 class Home extends Component {
@@ -64,9 +66,9 @@ class Home extends Component {
     }
 
 
-    postCreatedTime = (details) => {
+    postCreatedTime = (postCreatedTime) => {
         let createdTime = new Date();
-        createdTime.setUTCSeconds(details);
+        createdTime.setUTCSeconds(postCreatedTime);
         let yyyy = createdTime.getFullYear();
         let mm = createdTime.getMonth() + 1;
         let dd = createdTime.getDate();
@@ -95,7 +97,9 @@ class Home extends Component {
                                     subheader={this.postCreatedTime(details.created_time)}
                                 />
                                 <CardContent>
-
+                                    <div className={classes.media}>
+                                        <img className="image-post" alt="" src={details.images.standard_resolution.url} />
+                                    </div>
                                 </CardContent>
                             </Card>
                         </div>
