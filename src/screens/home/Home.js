@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import { withStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
 import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
     imagePostCard: {
@@ -15,9 +16,9 @@ const styles = theme => ({
     avatar: {
         margin: 10,
     },
-    media: {
-        height: 350,
-    },
+    tags: {
+        color: 'blue',
+    }
 });
 
 class Home extends Component {
@@ -55,6 +56,7 @@ class Home extends Component {
         userMediaXhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
                 var userMediaData = JSON.parse(this.responseText).data;
+                console.log(userMediaData);
                 that.setState({ data: userMediaData })
             }
         })
@@ -67,6 +69,7 @@ class Home extends Component {
 
 
     postCreatedTime = (postCreatedTime) => {
+
         let createdTime = new Date();
         createdTime.setUTCSeconds(postCreatedTime);
         let yyyy = createdTime.getFullYear();
@@ -79,6 +82,13 @@ class Home extends Component {
 
         let time = dd + "/" + mm + "/" + yyyy + " " + HH + ":" + MM + ":" + ss;
         return time;
+    }
+
+    postHashTags = (details) => {
+        const tags = details.tags.map(hashTags => {
+            return "#" + hashTags + " ";
+        })
+        return tags;
     }
 
     render() {
@@ -97,8 +107,17 @@ class Home extends Component {
                                     subheader={this.postCreatedTime(details.created_time)}
                                 />
                                 <CardContent>
-                                    <div className={classes.media}>
+                                    <div className="post-content">
                                         <img className="image-post" alt="" src={details.images.standard_resolution.url} />
+                                    </div>
+                                    <hr />
+                                    <div className="caption">
+                                        <Typography component="p">
+                                            {details.caption.text.split('\n').map((item, key) => {
+                                                return <span id={"post_caption_" + key} key={key}>{item}<br /></span>
+                                            })}
+                                            <span className={classes.tags}>{this.postHashTags(details)}</span>
+                                        </Typography>
                                     </div>
                                 </CardContent>
                             </Card>
