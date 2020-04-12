@@ -29,3 +29,23 @@
 .searchInput {
     width: 90%;
 }
+
+.MuiPopover-paper {
+    left: 1285px;
+    margin: 5px;
+    width: 140px;
+}
+
+.MuiMenu-list {
+    display: block;
+    flex-direction: column;
+    padding: 5px;
+    background-color: rgb(223, 223, 223);
+}
+
+hr {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    margin-right: 10px;
+}

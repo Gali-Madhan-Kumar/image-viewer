@@ -3,14 +3,37 @@ import './Header.css';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
-import Avatar from '@material-ui/core/Avatar'
+import Avatar from '@material-ui/core/Avatar';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const styles = {
+
     searchInputField: {
         width: '100%',
     }
 }
+
 class Header extends Component {
+
+    constructor() {
+        super();
+        this.state = {
+            isOpen: false,
+        }
+    }
+
+    onOpenMenuHandler = () => {
+        this.setState({
+            isOpen: true,
+        });
+    }
+
+    onCloseMenuHandler = () => {
+        this.setState({
+            isOpen: false
+        });
+    }
 
     render() {
         return (
@@ -31,9 +54,21 @@ class Header extends Component {
                             </div>
                         </div>
                         <div className="userProfile">
-                            <IconButton>
+                            <IconButton id="menu" onClick={this.onOpenMenuHandler}>
                                 <Avatar alt="User Profile Pic" src={this.props.userProfileUrl} />
                             </IconButton>
+                            <div>
+                                <Menu
+                                    id="simple-menu"
+                                    keepMounted
+                                    open={this.state.isOpen}
+                                    onClose={this.onCloseMenuHandler}
+                                    anchorReference="anchorPosition"
+                                    anchorPosition={{ top: 62, left: 2000 }}>
+                                    <span> <MenuItem>My Account</MenuItem><hr /></span>
+                                    <MenuItem>Logout</MenuItem>
+                                </Menu>
+                            </div>
                         </div>
                     </header>)}
             </div>
