@@ -16,6 +16,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
+import Grid from '@material-ui/core/Grid';
 
 const styles = theme => ({
     imagePostCard: {
@@ -39,6 +40,7 @@ class Home extends Component {
         this.state = {
             userData: {},
             data: [],
+            comment: "",
         }
     }
 
@@ -64,6 +66,7 @@ class Home extends Component {
         userMediaXhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
                 var userMediaData = JSON.parse(this.responseText).data;
+                console.log(userMediaData);
                 that.setState({ data: userMediaData })
             }
         })
@@ -122,6 +125,41 @@ class Home extends Component {
         }
     }
 
+    onCommentAddClickHandler = (photoId, username) => {
+        let comment = this.state.comment;
+        if (comment === '') {
+            return;
+        }
+        let photosData = this.state.data;
+        if (photosData !== null && photosData.length > 0) {
+
+            let postsWithComments = photosData.map((photoOfPost, index) => {
+                if (photoOfPost.id === photoId) {
+                    photoOfPost.comments['listOfComments'] = photoOfPost.comments['listOfComments'] || [];
+                    photoOfPost.comments['listOfComments'].push({
+                        id: (photoOfPost.comments['listOfComments'].length + 1),
+                        commentedUserName: username,
+                        comment: this.state.comment
+                    });
+                    
+                }
+                return photoOfPost;
+            });
+            
+            this.setState({
+                data: postsWithComments,
+                comment: "",
+            });
+            document.getElementById('comment' + photoId).value = "";
+        }
+    }
+
+    onCommentValueHandler = (e) => {
+        this.setState({
+            comment: e.target.value,
+        });
+    }
+
     render() {
 
         const { classes } = this.props;
@@ -165,14 +203,26 @@ class Home extends Component {
                                             </div>
                                         </CardActions>
                                     </div>
-                                    <div className="input-comment">
-                                    <CardActions>
-                                            <FormControl className="commentInputBox">
-                                                <InputLabel htmlFor="comment">Add a Comment</InputLabel>
-                                                <Input id={"comment" + details.id} type="text" />
-                                            </FormControl>
-                                            <Button id="comment-add-button" variant="contained" color="primary" onClick={this.onCommentAddClickHandler}>ADD</Button>
-                                        </CardActions>
+                                    <div className="commentBox-div">
+                                        <Grid className="comments-grid">
+                                            <Grid >
+                                                {(details.comments.listOfComments || []).map((comment) => {
+                                                    return <Typography key={comment.id}>
+                                                        <span className="userNameOfComment"><b>{comment.commentedUserName}:</b></span>
+                                                        <span className="commentData"> {comment.comment}</span>
+                                                    </Typography>
+                                                })}
+                                            </Grid>
+                                        </Grid>
+                                        <div className="input-comment">
+                                            <CardActions style={{ padding: 0 }}>
+                                                <FormControl className="commentInputBox" style={{ marginLeft: 0}}>
+                                                    <InputLabel htmlFor="comment">Add a Comment</InputLabel>
+                                                    <Input id={"comment" + details.id} type="text" onChange={this.onCommentValueHandler} />
+                                                </FormControl>
+                                                <Button style={{ marginTop: 10 }} className="comment-add-button" id={"commentadd" + details.id} variant="contained" color="primary" onClick={this.onCommentAddClickHandler.bind(this, details.id, details.user.username)}>ADD</Button><br />
+                                            </CardActions>
+                                        </div>
                                     </div>
                                 </CardContent>
                             </Card>
