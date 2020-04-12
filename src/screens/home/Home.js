@@ -8,6 +8,10 @@ import { withStyles } from '@material-ui/core/styles';
 import Icon from '@material-ui/core/Icon';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+import Favorite from '@material-ui/icons/Favorite';
+import CardActions from '@material-ui/core/CardActions';
+import IconButton from '@material-ui/core/IconButton';
 
 const styles = theme => ({
     imagePostCard: {
@@ -18,7 +22,7 @@ const styles = theme => ({
     },
     tags: {
         color: 'blue',
-    }
+    },
 });
 
 class Home extends Component {
@@ -30,7 +34,7 @@ class Home extends Component {
         }
         this.state = {
             userData: {},
-            data: []
+            data: [],
         }
     }
 
@@ -91,13 +95,37 @@ class Home extends Component {
         return tags;
     }
 
+    onLikeButtonClickHandler = (photoId) => {
+
+        let photosData = this.state.data;
+        if (photosData !== null && photosData.length > 0) {
+            
+            let postWithLike = photosData.map( photosData => {
+                if (photosData.id === photoId) {
+                    if (photosData.user_has_liked) {
+                        photosData.user_has_liked = false;
+                        photosData.likes.count = (photosData.likes.count) + 1;
+                    } else {
+                        photosData.user_has_liked = true;
+                        photosData.likes.count = (photosData.likes.count) - 1;
+                    }
+                } else { }
+                return photosData;
+            });
+
+            this.setState({
+                data: postWithLike,
+            });
+        }
+    }
+
     render() {
         const { classes } = this.props;
         return (
             <div>
                 <Header userProfileUrl={this.state.userData.profile_picture} />
                 <div className="post-card">
-                    {this.state.data.map(details => (
+                    {this.state.data.map((details, index) => (
                         <div className="post" key={details.id}>
                             <Card className={classes.imagePostCard}>
                                 <CardHeader avatar={<Icon>
@@ -118,6 +146,18 @@ class Home extends Component {
                                             })}
                                             <span className={classes.tags}>{this.postHashTags(details)}</span>
                                         </Typography>
+                                        <CardActions style={{ padding: 0, marginTop: 10}}>
+                                        <IconButton style={{ padding: 0 }} onClick={this.onLikeButtonClickHandler.bind(this, details.id)}>
+                                            {details.user_has_liked ?
+                                                <FavoriteBorder  />
+                                                :
+                                                <Favorite style={{ color: 'red'}} />
+                                            }
+                                        </IconButton>
+                                        <div className="likeCount">
+                                            <span >{details.likes.count} likes</span>
+                                        </div>
+                                    </CardActions>
                                     </div>
                                 </CardContent>
                             </Card>
