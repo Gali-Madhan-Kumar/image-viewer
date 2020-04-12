@@ -20,3 +20,11 @@
 #post_caption_1 {
     display: none;
 }
+
+.commentInputBox {
+    width: 89%;
+}
+
+#comment-add-button {
+    margin-top: 10px;
+}

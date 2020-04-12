@@ -12,6 +12,10 @@ import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Favorite from '@material-ui/icons/Favorite';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
 
 const styles = theme => ({
     imagePostCard: {
@@ -60,7 +64,6 @@ class Home extends Component {
         userMediaXhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
                 var userMediaData = JSON.parse(this.responseText).data;
-                console.log(userMediaData);
                 that.setState({ data: userMediaData })
             }
         })
@@ -99,8 +102,8 @@ class Home extends Component {
 
         let photosData = this.state.data;
         if (photosData !== null && photosData.length > 0) {
-            
-            let postWithLike = photosData.map( photosData => {
+
+            let postWithLike = photosData.map(photosData => {
                 if (photosData.id === photoId) {
                     if (photosData.user_has_liked) {
                         photosData.user_has_liked = false;
@@ -120,8 +123,11 @@ class Home extends Component {
     }
 
     render() {
+
         const { classes } = this.props;
+
         return (
+
             <div>
                 <Header userProfileUrl={this.state.userData.profile_picture} />
                 <div className="post-card">
@@ -146,18 +152,27 @@ class Home extends Component {
                                             })}
                                             <span className={classes.tags}>{this.postHashTags(details)}</span>
                                         </Typography>
-                                        <CardActions style={{ padding: 0, marginTop: 10}}>
-                                        <IconButton style={{ padding: 0 }} onClick={this.onLikeButtonClickHandler.bind(this, details.id)}>
-                                            {details.user_has_liked ?
-                                                <FavoriteBorder  />
-                                                :
-                                                <Favorite style={{ color: 'red'}} />
-                                            }
-                                        </IconButton>
-                                        <div className="likeCount">
-                                            <span >{details.likes.count} likes</span>
-                                        </div>
-                                    </CardActions>
+                                        <CardActions style={{ padding: 0, marginTop: 10 }}>
+                                            <IconButton style={{ padding: 0 }} onClick={this.onLikeButtonClickHandler.bind(this, details.id)}>
+                                                {details.user_has_liked ?
+                                                    <FavoriteBorder />
+                                                    :
+                                                    <Favorite style={{ color: 'red' }} />
+                                                }
+                                            </IconButton>
+                                            <div className="likeCount">
+                                                <span >{details.likes.count} likes</span>
+                                            </div>
+                                        </CardActions>
+                                    </div>
+                                    <div className="input-comment">
+                                    <CardActions>
+                                            <FormControl className="commentInputBox">
+                                                <InputLabel htmlFor="comment">Add a Comment</InputLabel>
+                                                <Input id={"comment" + details.id} type="text" />
+                                            </FormControl>
+                                            <Button id="comment-add-button" variant="contained" color="primary" onClick={this.onCommentAddClickHandler}>ADD</Button>
+                                        </CardActions>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -165,6 +180,7 @@ class Home extends Component {
                     ))}
                 </div>
             </div>
+
         )
     }
 }
