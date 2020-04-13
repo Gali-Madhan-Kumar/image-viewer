@@ -13,10 +13,6 @@
     flex: 1;
 } 
 
-#searchBox :hover{
-    opacity: 1;
-}
-
 .searchIcon {
     display: flex;
     align-items: center;

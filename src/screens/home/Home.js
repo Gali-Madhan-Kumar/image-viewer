@@ -189,7 +189,7 @@ class Home extends Component {
     }
 
     onMyProfileClickHandler = () => {
-        this.props.history.push('/profile')
+        this.props.history.push('/profile');
     }
 
     onSearch = (e) => {

@@ -60,7 +60,7 @@ class Header extends Component {
                     :
                     <header className="app-header">
                         <span className="app-logo">Image Viewer</span>
-                        <div className={classes.searchBox}>
+                        <div className={classes.searchBox} id="search-div">
                             <div className="searchIcon">
                                 <SearchIcon />
                             </div>
