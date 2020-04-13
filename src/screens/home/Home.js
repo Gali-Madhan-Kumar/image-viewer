@@ -165,6 +165,10 @@ class Home extends Component {
         this.props.history.push('/');
     }
 
+    onMyProfileClickHandler = () => {
+        this.props.history.push('/profile')
+    }
+
     render() {
 
         const { classes } = this.props;
@@ -172,7 +176,7 @@ class Home extends Component {
         return (
 
             <div>
-                <Header userProfileUrl={this.state.userData.profile_picture} logout={this.onLogoutClickHandler}/>
+                <Header userProfileUrl={this.state.userData.profile_picture} logout={this.onLogoutClickHandler} profilepage={this.onMyProfileClickHandler}/>
                 <div className="post-card">
                     {this.state.data.map((details, index) => (
                         <div className="post" key={details.id}>

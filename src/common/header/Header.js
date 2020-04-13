@@ -6,13 +6,27 @@ import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { fade, withStyles } from '@material-ui/core/styles';
 
 const styles = {
 
     searchInputField: {
         width: '100%',
-    }
+    },
 }
+
+const useStyles = theme => ({
+    searchBox: {
+      borderRadius: 4,
+      backgroundColor: '#c0c0c0',
+      width: 300,
+      display: 'flex',
+      opacity: 1,
+      '&:hover': {
+        backgroundColor: fade('#c0c0c0', 0.75),
+      },
+    },
+  });
 
 class Header extends Component {
 
@@ -36,6 +50,7 @@ class Header extends Component {
     }
 
     render() {
+        const { classes } = this.props;
         return (
             <div>
                 {(sessionStorage.getItem('access-token') == null ?
@@ -45,7 +60,7 @@ class Header extends Component {
                     :
                     <header className="app-header">
                         <span className="app-logo">Image Viewer</span>
-                        <div className="searchBox">
+                        <div className={classes.searchBox}>
                             <div className="searchIcon">
                                 <SearchIcon />
                             </div>
@@ -65,7 +80,7 @@ class Header extends Component {
                                     onClose={this.onCloseMenuHandler}
                                     anchorReference="anchorPosition"
                                     anchorPosition={{ top: 62, left: 2000 }}>
-                                    <span><MenuItem>My Account</MenuItem><hr style={{ marginRight: 10, marginLeft: 10, marginTop: 2, marginBottom: 0}}/></span>
+                                    <span><MenuItem onClick={this.props.profilepage}>My Account</MenuItem><hr style={{ marginRight: 10, marginLeft: 10, marginTop: 2, marginBottom: 0 }} /></span>
                                     <MenuItem onClick={this.props.logout}>Logout</MenuItem>
                                 </Menu>
                             </div>
@@ -76,4 +91,4 @@ class Header extends Component {
     }
 }
 
-export default Header;
+export default withStyles(useStyles)(Header);
