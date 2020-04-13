@@ -10,4 +10,32 @@
     margin: 10px;
     font-size: 18px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    flex: 1;
 } 
+
+#searchBox :hover{
+    opacity: 1;
+}
+
+.searchIcon {
+    display: flex;
+    align-items: center;
+    margin: 2px;
+}
+
+.searchInput {
+    width: 90%;
+}
+
+.MuiPopover-paper {
+    left: 1285px;
+    margin: 5px;
+    width: 140px;
+}
+
+.MuiMenu-list {
+    display: block;
+    flex-direction: column;
+    padding: 5px;
+    background-color: rgb(223, 223, 223);
+}
