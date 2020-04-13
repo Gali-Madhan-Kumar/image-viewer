@@ -16,8 +16,8 @@ const styles = {
 
 class Header extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             isOpen: false,
         }
@@ -65,8 +65,8 @@ class Header extends Component {
                                     onClose={this.onCloseMenuHandler}
                                     anchorReference="anchorPosition"
                                     anchorPosition={{ top: 62, left: 2000 }}>
-                                    <span> <MenuItem>My Account</MenuItem><hr /></span>
-                                    <MenuItem>Logout</MenuItem>
+                                    <span><MenuItem>My Account</MenuItem><hr style={{ marginRight: 10, marginLeft: 10, marginTop: 2, marginBottom: 0}}/></span>
+                                    <MenuItem onClick={this.props.logout}>Logout</MenuItem>
                                 </Menu>
                             </div>
                         </div>

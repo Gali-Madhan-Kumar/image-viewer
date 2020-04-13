@@ -24,3 +24,10 @@
 .commentInputBox {
     width: 89%;
 }
+#horizontal {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: -10px;
+    margin-bottom: 15px;
+    color: rgb(223, 223, 223);
+}

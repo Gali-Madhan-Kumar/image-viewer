@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import './Home.css';
 import Header from '../../common/header/Header';
+import './Home.css';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
@@ -160,6 +160,11 @@ class Home extends Component {
         });
     }
 
+    onLogoutClickHandler = () => {
+        sessionStorage.removeItem('access-token');
+        this.props.history.push('/');
+    }
+
     render() {
 
         const { classes } = this.props;
@@ -167,7 +172,7 @@ class Home extends Component {
         return (
 
             <div>
-                <Header userProfileUrl={this.state.userData.profile_picture} />
+                <Header userProfileUrl={this.state.userData.profile_picture} logout={this.onLogoutClickHandler}/>
                 <div className="post-card">
                     {this.state.data.map((details, index) => (
                         <div className="post" key={details.id}>
@@ -180,9 +185,10 @@ class Home extends Component {
                                 />
                                 <CardContent>
                                     <div className="post-content">
-                                        <img className="image-post" alt="" src={details.images.standard_resolution.url} />
+                                        <img className="image-post" alt="" src={details.images.standard_resolution.url} /><br /><br />
+                                        <hr id="horizontal"/>
                                     </div>
-                                    <hr />
+                                    
                                     <div className="caption">
                                         <Typography component="p">
                                             {details.caption.text.split('\n').map((item, key) => {
