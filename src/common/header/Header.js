@@ -65,7 +65,7 @@ class Header extends Component {
                                 <SearchIcon />
                             </div>
                             <div className="searchInput">
-                                <InputBase style={styles.searchInputField} placeholder="Search..." />
+                                <InputBase onChange={this.props.search} style={styles.searchInputField} placeholder="Search..." />
                             </div>
                         </div>
                         <div className="userProfile">

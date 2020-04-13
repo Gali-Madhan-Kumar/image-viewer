@@ -17,13 +17,10 @@
    width: 100%;
 }
 
-#post_caption_1 {
-    display: none;
-}
-
 .commentInputBox {
     width: 89%;
 }
+
 #horizontal {
     margin-left: 0px;
     margin-right: 0px;

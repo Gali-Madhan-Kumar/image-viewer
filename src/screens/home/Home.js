@@ -39,8 +39,10 @@ class Home extends Component {
         }
         this.state = {
             userData: {},
-            data: [],
+            data: null,
             comment: "",
+            filteredPosts: null,
+            search: false,
         }
     }
 
@@ -66,8 +68,7 @@ class Home extends Component {
         userMediaXhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
                 var userMediaData = JSON.parse(this.responseText).data;
-                console.log(userMediaData);
-                that.setState({ data: userMediaData })
+                that.setState({ data: userMediaData, filteredPosts: userMediaData })
             }
         })
         if (sessionStorage.getItem('access-token') !== null) {
@@ -76,7 +77,6 @@ class Home extends Component {
             userMediaXhr.send(userMediaInfo);
         }
     }
-
 
     postCreatedTime = (postCreatedTime) => {
 
@@ -94,63 +94,86 @@ class Home extends Component {
         return time;
     }
 
-    postHashTags = (details) => {
-        const tags = details.tags.map(hashTags => {
-            return "#" + hashTags + " ";
-        })
-        return tags;
-    }
+    onLikeButtonClickHandler = (photoId, postIndex) => {
 
-    onLikeButtonClickHandler = (photoId) => {
-
-        let photosData = this.state.data;
-        if (photosData !== null && photosData.length > 0) {
-
-            let postWithLike = photosData.map(photosData => {
-                if (photosData.id === photoId) {
-                    if (photosData.user_has_liked) {
-                        photosData.user_has_liked = false;
-                        photosData.likes.count = (photosData.likes.count) + 1;
+        let listOfLikedPhotos = this.state.data;
+        let likeSearchResultPosts = this.state.filteredPosts;
+        if (listOfLikedPhotos !== null && listOfLikedPhotos.length > 0) {
+            let postWithLike = listOfLikedPhotos.map((photoPostlike, photoIndex) => {
+                if (photoPostlike.id === photoId) {
+                    if (photoPostlike.user_has_liked) {
+                        photoPostlike.user_has_liked = false;
+                        photoPostlike.likes.count = (photoPostlike.likes.count) + 1;
                     } else {
-                        photosData.user_has_liked = true;
-                        photosData.likes.count = (photosData.likes.count) - 1;
+                        photoPostlike.user_has_liked = true;
+                        photoPostlike.likes.count = (photoPostlike.likes.count) - 1;
                     }
                 } else { }
-                return photosData;
+                return photoPostlike;
             });
+            if (likeSearchResultPosts !== null && likeSearchResultPosts.length > 0) {
+                if (this.state.searched) {
+                    if (likeSearchResultPosts[postIndex].user_has_liked) {
 
+                        likeSearchResultPosts[postIndex].user_has_liked = false;
+                        likeSearchResultPosts[postIndex].likes.count = (likeSearchResultPosts[postIndex].likes.count) + 1;
+                    } else {
+                        likeSearchResultPosts[postIndex].user_has_liked = true;
+                        likeSearchResultPosts[postIndex].likes.count = (likeSearchResultPosts[postIndex].likes.count) - 1;
+                    }
+                } else {
+                    if (likeSearchResultPosts[postIndex].user_has_liked === false) {
+
+                        likeSearchResultPosts[postIndex].user_has_liked = false;
+                    } else {
+                        likeSearchResultPosts[postIndex].user_has_liked = true;
+                    }
+                }
+            }
             this.setState({
                 data: postWithLike,
+                filteredPosts: likeSearchResultPosts,
             });
         }
     }
 
-    onCommentAddClickHandler = (photoId, username) => {
+    onCommentAddClickHandler = (photoId, username, postIndex) => {
         let comment = this.state.comment;
         if (comment === '') {
             return;
-        }
-        let photosData = this.state.data;
-        if (photosData !== null && photosData.length > 0) {
+        } else {
+            let photosData = this.state.data;
+            if (photosData !== null && photosData.length > 0) {
+                let postsWithComments = photosData.map((photoOfPost, index) => {
+                    if (photoOfPost.id === photoId) {
+                        photoOfPost.comments['listOfComments'] = photoOfPost.comments['listOfComments'] || [];
+                        photoOfPost.comments['listOfComments'].push({
+                            id: (photoOfPost.comments['listOfComments'].length + 1),
+                            commentedUserName: username,
+                            comment: this.state.comment,
+                        });
 
-            let postsWithComments = photosData.map((photoOfPost, index) => {
-                if (photoOfPost.id === photoId) {
-                    photoOfPost.comments['listOfComments'] = photoOfPost.comments['listOfComments'] || [];
-                    photoOfPost.comments['listOfComments'].push({
-                        id: (photoOfPost.comments['listOfComments'].length + 1),
-                        commentedUserName: username,
-                        comment: this.state.comment
-                    });
-                    
+                    }
+                    return photoOfPost;
+                });
+                let filterPostResult = this.state.filteredPosts;
+                if (this.state.searched === "no") {
+                    if (filterPostResult !== null && filterPostResult.length > 0) {
+                        filterPostResult[postIndex].comments['listOfComments'] = filterPostResult[postIndex].comments['listOfComments'] || [];
+                        filterPostResult[postIndex].comments['listOfComments'].push({
+                            id: filterPostResult[postIndex].comments['listOfComments'].length + 1,
+                            commentedUserName: username,
+                            commentInput: this.state.comment,
+                        });
+                    }
                 }
-                return photoOfPost;
-            });
-            
-            this.setState({
-                data: postsWithComments,
-                comment: "",
-            });
-            document.getElementById('comment' + photoId).value = "";
+                this.setState({
+                    data: postsWithComments,
+                    comment: "",
+                    filteredPosts: filterPostResult,
+                });
+                document.getElementById('comment' + photoId).value = "";
+            }
         }
     }
 
@@ -169,6 +192,20 @@ class Home extends Component {
         this.props.history.push('/profile')
     }
 
+    onSearch = (e) => {
+        const searchPost = (e.target.value).toLowerCase();
+        let posts = this.state.data;
+        let filteredResults = [];
+        if (posts != null && posts.length > 0) {
+            filteredResults = posts.filter((post) =>
+                (post.caption.text.split(/#/)[0].toLowerCase()).indexOf(searchPost) > -1);
+            this.setState({
+                filteredPosts: filteredResults,
+                search: true,
+            });
+        }
+    }
+
     render() {
 
         const { classes } = this.props;
@@ -176,9 +213,9 @@ class Home extends Component {
         return (
 
             <div>
-                <Header userProfileUrl={this.state.userData.profile_picture} logout={this.onLogoutClickHandler} profilepage={this.onMyProfileClickHandler}/>
+                <Header userProfileUrl={this.state.userData.profile_picture} logout={this.onLogoutClickHandler} profilepage={this.onMyProfileClickHandler} search={this.onSearch} />
                 <div className="post-card">
-                    {this.state.data.map((details, index) => (
+                    {(this.state.filteredPosts || []).map((details, index) => (
                         <div className="post" key={details.id}>
                             <Card className={classes.imagePostCard}>
                                 <CardHeader avatar={<Icon>
@@ -190,18 +227,16 @@ class Home extends Component {
                                 <CardContent>
                                     <div className="post-content">
                                         <img className="image-post" alt="" src={details.images.standard_resolution.url} /><br /><br />
-                                        <hr id="horizontal"/>
+                                        <hr id="horizontal" />
                                     </div>
-                                    
                                     <div className="caption">
                                         <Typography component="p">
-                                            {details.caption.text.split('\n').map((item, key) => {
-                                                return <span id={"post_caption_" + key} key={key}>{item}<br /></span>
-                                            })}
-                                            <span className={classes.tags}>{this.postHashTags(details)}</span>
+                                            {details.caption.text.split(/#/)[0]}
                                         </Typography>
+                                        {details.tags.map((tag, index) => <span key={"hash" + details.id + index}
+                                            className={classes.tags}>#{tag} </span>)}
                                         <CardActions style={{ padding: 0, marginTop: 10 }}>
-                                            <IconButton style={{ padding: 0 }} onClick={this.onLikeButtonClickHandler.bind(this, details.id)}>
+                                            <IconButton style={{ padding: 0 }} onClick={this.onLikeButtonClickHandler.bind(this, details.id, index)}>
                                                 {details.user_has_liked ?
                                                     <FavoriteBorder />
                                                     :
@@ -226,11 +261,11 @@ class Home extends Component {
                                         </Grid>
                                         <div className="input-comment">
                                             <CardActions style={{ padding: 0 }}>
-                                                <FormControl className="commentInputBox" style={{ marginLeft: 0}}>
+                                                <FormControl className="commentInputBox" style={{ marginLeft: 0 }}>
                                                     <InputLabel htmlFor="comment">Add a Comment</InputLabel>
                                                     <Input id={"comment" + details.id} type="text" onChange={this.onCommentValueHandler} />
                                                 </FormControl>
-                                                <Button style={{ marginTop: 10 }} className="comment-add-button" id={"commentadd" + details.id} variant="contained" color="primary" onClick={this.onCommentAddClickHandler.bind(this, details.id, details.user.username)}>ADD</Button><br />
+                                                <Button style={{ marginTop: 10 }} className="comment-add-button" id={"commentadd" + details.id} variant="contained" color="primary" onClick={this.onCommentAddClickHandler.bind(this, details.id, details.user.username, index)}>ADD</Button><br />
                                             </CardActions>
                                         </div>
                                     </div>
@@ -240,7 +275,6 @@ class Home extends Component {
                     ))}
                 </div>
             </div>
-
         )
     }
 }
