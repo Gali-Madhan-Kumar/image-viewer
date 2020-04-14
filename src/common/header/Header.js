@@ -17,16 +17,16 @@ const styles = {
 
 const useStyles = theme => ({
     searchBox: {
-      borderRadius: 4,
-      backgroundColor: '#c0c0c0',
-      width: 300,
-      display: 'flex',
-      opacity: 1,
-      '&:hover': {
-        backgroundColor: fade('#c0c0c0', 0.75),
-      },
+        borderRadius: 4,
+        backgroundColor: '#c0c0c0',
+        width: 300,
+        display: 'flex',
+        opacity: 1,
+        '&:hover': {
+            backgroundColor: fade('#c0c0c0', 0.75),
+        },
     },
-  });
+});
 
 class Header extends Component {
 
@@ -60,7 +60,7 @@ class Header extends Component {
                     :
                     <header className="app-header">
                         <span className="app-logo">Image Viewer</span>
-                        <div className={classes.searchBox}>
+                        <div className={classes.searchBox} id="search-div">
                             <div className="searchIcon">
                                 <SearchIcon />
                             </div>
@@ -79,9 +79,13 @@ class Header extends Component {
                                     open={this.state.isOpen}
                                     onClose={this.onCloseMenuHandler}
                                     anchorReference="anchorPosition"
-                                    anchorPosition={{ top: 62, left: 2000 }}>
-                                    <span><MenuItem onClick={this.props.profilepage}>My Account</MenuItem><hr style={{ marginRight: 10, marginLeft: 10, marginTop: 2, marginBottom: 0 }} /></span>
-                                    <MenuItem onClick={this.props.logout}>Logout</MenuItem>
+                                    anchorPosition={{ top: 62, left: 2000 }}> {this.props.homePage === true && <div>
+                                        <MenuItem onClick={this.props.profilepage}>My Account</MenuItem><hr style={{ marginRight: 10, marginLeft: 10, marginTop: 2, marginBottom: 0 }} />
+                                        <MenuItem onClick={this.props.logout}>Logout</MenuItem>
+                                    </div>}
+                                    {this.props.profilePage === true && <div>
+                                        <MenuItem onClick={this.props.logout}>Logout</MenuItem>
+                                        </div>}
                                 </Menu>
                             </div>
                         </div>

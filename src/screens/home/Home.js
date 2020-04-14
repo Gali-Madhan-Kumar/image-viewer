@@ -43,6 +43,7 @@ class Home extends Component {
             comment: "",
             filteredPosts: null,
             search: false,
+            isHomePage: true,
         }
     }
 
@@ -68,6 +69,7 @@ class Home extends Component {
         userMediaXhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
                 var userMediaData = JSON.parse(this.responseText).data;
+                console.log(userMediaData);
                 that.setState({ data: userMediaData, filteredPosts: userMediaData })
             }
         })
@@ -189,7 +191,7 @@ class Home extends Component {
     }
 
     onMyProfileClickHandler = () => {
-        this.props.history.push('/profile')
+        this.props.history.push('/profile');
     }
 
     onSearch = (e) => {
@@ -213,13 +215,13 @@ class Home extends Component {
         return (
 
             <div>
-                <Header userProfileUrl={this.state.userData.profile_picture} logout={this.onLogoutClickHandler} profilepage={this.onMyProfileClickHandler} search={this.onSearch} />
+                <Header userProfileUrl={this.state.userData.profile_picture} logout={this.onLogoutClickHandler} profilepage={this.onMyProfileClickHandler} search={this.onSearch} homePage={this.state.isHomePage}/>
                 <div className="post-card">
                     {(this.state.filteredPosts || []).map((details, index) => (
                         <div className="post" key={details.id}>
                             <Card className={classes.imagePostCard}>
                                 <CardHeader avatar={<Icon>
-                                    <Avatar>{details.user.profile_picture}</Avatar>
+                                    <Avatar src={details.user.profile_picture} />
                                 </Icon>}
                                     title={details.user.username}
                                     subheader={this.postCreatedTime(details.created_time)}
