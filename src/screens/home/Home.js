@@ -68,6 +68,7 @@ class Home extends Component {
         userMediaXhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
                 var userMediaData = JSON.parse(this.responseText).data;
+                console.log(userMediaData);
                 that.setState({ data: userMediaData, filteredPosts: userMediaData })
             }
         })
@@ -219,7 +220,7 @@ class Home extends Component {
                         <div className="post" key={details.id}>
                             <Card className={classes.imagePostCard}>
                                 <CardHeader avatar={<Icon>
-                                    <Avatar>{details.user.profile_picture}</Avatar>
+                                    <Avatar src={details.user.profile_picture} />
                                 </Icon>}
                                     title={details.user.username}
                                     subheader={this.postCreatedTime(details.created_time)}
