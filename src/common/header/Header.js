@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { fade, withStyles } from '@material-ui/core/styles';
 
 const styles = {
+    
     searchInputField: {
         width: '100%',
     },
@@ -84,7 +85,7 @@ class Header extends Component {
                                     </div>}
                                     {this.props.profilePage === true && <div>
                                         <MenuItem onClick={this.props.logout}>Logout</MenuItem>
-                                        </div>}
+                                    </div>}
                                 </Menu>
                             </div>
                         </div>

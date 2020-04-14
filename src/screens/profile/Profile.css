@@ -2,3 +2,11 @@
     display: flex;
     justify-content: center;
 }
+
+#edit {
+    margin-bottom: 25px;
+}
+
+#update {
+    margin-top: 20px;
+}

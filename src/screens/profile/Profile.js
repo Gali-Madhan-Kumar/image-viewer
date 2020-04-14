@@ -5,10 +5,15 @@ import { Card } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
-import { Fab } from '@material-ui/core';
+import { Fab, Button } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
+import Modal from '@material-ui/core/Modal';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import Input from '@material-ui/core/Input';
 import '../profile/Profile.css';
 
 const styles = theme => ({
@@ -20,6 +25,16 @@ const styles = theme => ({
         width: '50px',
         height: '50px',
     },
+    modal: {
+        position: "absolute",
+        width: 250,
+        backgroundColor: "white",
+        padding: 16,
+        outline: "none",
+        top: `50%`,
+        left: `50%`,
+        transform: `translate(-50%, -50%)`
+    }
 });
 
 class Profile extends Component {
@@ -36,7 +51,11 @@ class Profile extends Component {
             username: "",
             follows: "",
             profilepicture: "",
-            followedBy: ","
+            followedBy: "",
+            fullNameRequired: "dispNone",
+            fullname: "",
+            isEditModalOpen: false,
+            updatedFullName: "",
         }
     }
 
@@ -78,8 +97,17 @@ class Profile extends Component {
         this.props.history.push('/');
     }
 
+    editModalOpenHandler = () => {
+        this.setState({
+            updatedFullName: this.state.fullnname,
+            isEditModalOpen: true
+        });
+    };
+
     render() {
+
         const { classes } = this.props;
+
         return (
             <div>
                 <Header userProfileUrl={this.state.profilepicture} logout={this.onLogoutClickHandler} profilePage={this.state.isProfilePage} />
@@ -111,20 +139,35 @@ class Profile extends Component {
                                     </Grid>
                                 </Grid>
                             } />
-                            <CardContent style={{ paddingTop: 0 }}>
+                        <CardContent style={{ paddingTop: 0 }}>
                             <Grid container alignItems="center" spacing={2}>
-                                        <Grid item style={{ marginLeft: 85 }}>
-                                            <Typography variant="subtitle1">
-                                                {this.state.fullname}
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item>
-                                            <Fab style={{ width: 40, height: 40 }} color="secondary" aria-label="edit">
-                                                <EditIcon />
-                                            </Fab>
-                                        </Grid>
-                                    </Grid>
-                            </CardContent>
+                                <Grid item style={{ marginLeft: 85 }}>
+                                    <Typography variant="subtitle1">
+                                        {this.state.fullname}
+                                    </Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Fab style={{ width: 40, height: 40 }} color="secondary" aria-label="edit" onClick={this.editModalOpenHandler}>
+                                        <EditIcon />
+                                    </Fab>
+                                    <Modal open={this.state.isEditModalOpen} onClose={this.editModalCloseHandler}>
+                                        <Card className={classes.modal}>
+                                            <CardContent>
+                                                <Typography variant="h5" id="edit" className="modal-heading">Edit</Typography>
+                                                <FormControl required className="formControl" style={{ width: '100%' }}>
+                                                    <InputLabel htmlFor="username">Full Name</InputLabel>
+                                                    <Input id="fullname" type="text" />
+                                                    <FormHelperText className={this.state.fullNameRequired}>
+                                                        <span className="red">Required</span>
+                                                    </FormHelperText>
+                                                </FormControl><br /><br />
+                                                <Button variant="contained" id="update" color="primary">UPDATE</Button>
+                                            </CardContent>
+                                        </Card>
+                                    </Modal>
+                                </Grid>
+                            </Grid>
+                        </CardContent>
                     </Card>
                 </div>
             </div>
