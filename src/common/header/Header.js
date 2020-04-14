@@ -84,7 +84,7 @@ class Header extends Component {
                                     </div>}
                                     {this.props.profilePage === true && <div>
                                         <MenuItem onClick={this.props.logout}>Logout</MenuItem>
-                                    </div>}
+                                        </div>}
                                 </Menu>
                             </div>
                         </div>

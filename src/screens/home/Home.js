@@ -214,7 +214,7 @@ class Home extends Component {
         return (
 
             <div>
-                <Header userProfileUrl={this.state.userData.profile_picture} logout={this.onLogoutClickHandler} profilepage={this.onMyProfileClickHandler} search={this.onSearch} homePage={this.state.isHomePage} />
+                <Header userProfileUrl={this.state.userData.profile_picture} logout={this.onLogoutClickHandler} profilepage={this.onMyProfileClickHandler} search={this.onSearch} homePage={this.state.isHomePage}/>
                 <div className="post-card">
                     {(this.state.filteredPosts || []).map((details, index) => (
                         <div className="post" key={details.id}>
