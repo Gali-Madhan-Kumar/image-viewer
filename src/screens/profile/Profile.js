@@ -6,6 +6,9 @@ class Profile extends Component {
 
     constructor(props) {
         super(props);
+        if (sessionStorage.getItem('access-token') == null) {
+            props.history.replace('/');
+        }
         this.state = {
             userData: [],
             isProfilePage: true,
@@ -28,9 +31,9 @@ class Profile extends Component {
             xhr.setRequestHeader("Cache-Control", "no-cache");
             xhr.send(info);
         }
-
-        document.getElementById('search-div').style.display = 'none';
-        console.log(document.getElementById('popover-menu'));
+        if (sessionStorage.getItem('access-token') !== null) {
+            document.getElementById('search-div').style.display = 'none';
+        }
     }
 
     onLogoutClickHandler = () => {
@@ -41,7 +44,7 @@ class Profile extends Component {
     render() {
         return (
             <div>
-                <Header userProfileUrl={this.state.userData.profile_picture} logout={this.onLogoutClickHandler} profilePage={this.state.isProfilePage}/>
+                <Header userProfileUrl={this.state.userData.profile_picture} logout={this.onLogoutClickHandler} profilePage={this.state.isProfilePage} />
             </div>
         )
     }
