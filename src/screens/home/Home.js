@@ -215,7 +215,7 @@ class Home extends Component {
         return (
 
             <div>
-                <Header userProfileUrl={this.state.userData.profile_picture} logout={this.onLogoutClickHandler} profilepage={this.onMyProfileClickHandler} search={this.onSearch} homePage={this.state.isHomePage}/>
+                <Header userProfileUrl={this.state.userData.profile_picture} logout={this.onLogoutClickHandler} profilepage={this.onMyProfileClickHandler} search={this.onSearch} homePage={this.state.isHomePage} />
                 <div className="post-card">
                     {(this.state.filteredPosts || []).map((details, index) => (
                         <div className="post" key={details.id}>
@@ -263,14 +263,14 @@ class Home extends Component {
                                         </Grid>
                                     </div>
                                     <div className="input-comment">
-                                            <CardActions style={{ padding: 0 }}>
-                                                <FormControl className="commentInputBox" style={{ marginLeft: 0 }}>
-                                                    <InputLabel htmlFor="comment">Add a Comment</InputLabel>
-                                                    <Input id={"comment" + details.id} type="text" onChange={this.onCommentValueHandler} />
-                                                </FormControl>
-                                                <Button style={{ marginTop: 10 }} className="comment-add-button" id={"commentadd" + details.id} variant="contained" color="primary" onClick={this.onCommentAddClickHandler.bind(this, details.id, details.user.username, index)}>ADD</Button><br />
-                                            </CardActions>
-                                        </div>
+                                        <CardActions style={{ padding: 0 }}>
+                                            <FormControl className="commentInputBox" style={{ marginLeft: 0 }}>
+                                                <InputLabel htmlFor="comment">Add a Comment</InputLabel>
+                                                <Input id={"comment" + details.id} type="text" onChange={this.onCommentValueHandler} />
+                                            </FormControl>
+                                            <Button style={{ marginTop: 10 }} className="comment-add-button" id={"commentadd" + details.id} variant="contained" color="primary" onClick={this.onCommentAddClickHandler.bind(this, details.id, details.user.username, index)}>ADD</Button><br />
+                                        </CardActions>
+                                    </div>
                                 </CardContent>
                             </Card>
                         </div>
