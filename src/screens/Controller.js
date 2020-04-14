@@ -15,8 +15,8 @@ class Controller extends Component {
             <Router>
                 <div className="main-container">
                     <Route exact path='/' render={({ history }, props) => <Login {...props} history={history} />} />
-                    <Route exact path='/home' render={({ history }, props) => <Home {...props} history={history} userInformationUrl={this.userInformationUrl} userMediaInformation={this.userMediaInformation}/>} />
-                    <Route exact path='/profile' render={({ history }, props) => <Profile {...props} history={history} userInformationUrl={this.userInformationUrl} userMediaInformation={this.userMediaInformation}/>} />
+                    <Route exact path='/home' render={({ history }, props) => <Home {...props} history={history} userInformationUrl={this.userInformationUrl} userMediaInformation={this.userMediaInformation} />} />
+                    <Route exact path='/profile' render={({ history }, props) => <Profile {...props} history={history} userInformationUrl={this.userInformationUrl} userMediaInformation={this.userMediaInformation} />} />
                 </div>
             </Router>
         )

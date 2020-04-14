@@ -33,6 +33,10 @@ class Profile extends Component {
         }
         if (sessionStorage.getItem('access-token') !== null) {
             document.getElementById('search-div').style.display = 'none';
+            document.getElementById('logo').style.cursor = 'pointer';
+            document.getElementById('logo').addEventListener("click", function() {
+                window.location.href = "/home";
+            });
         }
     }
 

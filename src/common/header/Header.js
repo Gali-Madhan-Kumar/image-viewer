@@ -59,7 +59,7 @@ class Header extends Component {
                     </header>
                     :
                     <header className="app-header">
-                        <span className="app-logo">Image Viewer</span>
+                        <span id="logo" className="app-logo">Image Viewer</span>
                         <div className={classes.searchBox} id="search-div">
                             <div className="searchIcon">
                                 <SearchIcon />
@@ -85,7 +85,7 @@ class Header extends Component {
                                     </div>}
                                     {this.props.profilePage === true && <div>
                                         <MenuItem onClick={this.props.logout}>Logout</MenuItem>
-                                        </div>}
+                                    </div>}
                                 </Menu>
                             </div>
                         </div>
