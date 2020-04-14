@@ -69,7 +69,6 @@ class Home extends Component {
         userMediaXhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
                 var userMediaData = JSON.parse(this.responseText).data;
-                console.log(userMediaData);
                 that.setState({ data: userMediaData, filteredPosts: userMediaData })
             }
         })
