@@ -69,7 +69,6 @@ class Home extends Component {
         userMediaXhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
                 var userMediaData = JSON.parse(this.responseText).data;
-                console.log(userMediaData);
                 that.setState({ data: userMediaData, filteredPosts: userMediaData })
             }
         })
@@ -215,7 +214,7 @@ class Home extends Component {
         return (
 
             <div>
-                <Header userProfileUrl={this.state.userData.profile_picture} logout={this.onLogoutClickHandler} profilepage={this.onMyProfileClickHandler} search={this.onSearch} homePage={this.state.isHomePage} />
+                <Header userProfileUrl={this.state.userData.profile_picture} logout={this.onLogoutClickHandler} profilepage={this.onMyProfileClickHandler} search={this.onSearch} homePage={this.state.isHomePage}/>
                 <div className="post-card">
                     {(this.state.filteredPosts || []).map((details, index) => (
                         <div className="post" key={details.id}>
