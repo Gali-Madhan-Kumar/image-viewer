@@ -252,14 +252,15 @@ class Home extends Component {
                                         <Grid className="comments-grid">
                                             <Grid >
                                                 {(details.comments.listOfComments || []).map((comment) => {
-                                                    return <Typography key={comment.id}>
+                                                    return <Typography style={{ marginTop: 10, marginBottom: 10 }} key={comment.id}>
                                                         <span className="userNameOfComment"><b>{comment.commentedUserName}:</b></span>
                                                         <span className="commentData"> {comment.comment}</span>
                                                     </Typography>
                                                 })}
                                             </Grid>
                                         </Grid>
-                                        <div className="input-comment">
+                                    </div>
+                                    <div className="input-comment">
                                             <CardActions style={{ padding: 0 }}>
                                                 <FormControl className="commentInputBox" style={{ marginLeft: 0 }}>
                                                     <InputLabel htmlFor="comment">Add a Comment</InputLabel>
@@ -268,7 +269,6 @@ class Home extends Component {
                                                 <Button style={{ marginTop: 10 }} className="comment-add-button" id={"commentadd" + details.id} variant="contained" color="primary" onClick={this.onCommentAddClickHandler.bind(this, details.id, details.user.username, index)}>ADD</Button><br />
                                             </CardActions>
                                         </div>
-                                    </div>
                                 </CardContent>
                             </Card>
                         </div>
