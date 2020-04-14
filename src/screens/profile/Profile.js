@@ -8,6 +8,7 @@ class Profile extends Component {
         super(props);
         this.state = {
             userData: [],
+            isProfilePage: true,
         }
     }
 
@@ -29,6 +30,7 @@ class Profile extends Component {
         }
 
         document.getElementById('search-div').style.display = 'none';
+        console.log(document.getElementById('popover-menu'));
     }
 
     onLogoutClickHandler = () => {
@@ -39,7 +41,7 @@ class Profile extends Component {
     render() {
         return (
             <div>
-                <Header userProfileUrl={this.state.userData.profile_picture} logout={this.onLogoutClickHandler}/>
+                <Header userProfileUrl={this.state.userData.profile_picture} logout={this.onLogoutClickHandler} profilePage={this.state.isProfilePage}/>
             </div>
         )
     }
