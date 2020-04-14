@@ -31,10 +31,15 @@ class Profile extends Component {
         document.getElementById('search-div').style.display = 'none';
     }
 
+    onLogoutClickHandler = () => {
+        sessionStorage.removeItem('access-token');
+        this.props.history.push('/');
+    }
+
     render() {
         return (
             <div>
-                <Header userProfileUrl={this.state.userData.profile_picture}/>
+                <Header userProfileUrl={this.state.userData.profile_picture} logout={this.onLogoutClickHandler}/>
             </div>
         )
     }
