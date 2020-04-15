@@ -18,6 +18,7 @@ import Input from '@material-ui/core/Input';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import { GridList, GridListTile } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
+import Favorite from '@material-ui/icons/Favorite';
 import '../profile/Profile.css';
 
 const styles = theme => ({
@@ -324,10 +325,16 @@ class Profile extends Component {
                                         </div>
                                         <div className="like-and-comment-div">
                                             <div>
-                                                <CardActions style={{ padding: 0, marginTop: 10 }}>
+                                                <CardActions style={{ padding: 0, marginTop: 10, marginBottom: 10 }}>
                                                     <IconButton style={{ padding: 0 }}>
-                                                        <FavoriteBorder />
+                                                        {this.state.selectedImagePost.user_has_liked ?
+                                                            <FavoriteBorder /> :
+                                                            <Favorite style={{ color: 'red' }} />
+                                                        }
                                                     </IconButton>
+                                                    <div className="totalLikes">
+                                                        <span >{this.state.selectedImagePost.likes.count} likes</span>
+                                                    </div>
                                                 </CardActions>
                                             </div>
                                             <div>
