@@ -22,3 +22,12 @@
 .dispBlock {
     display: block;
 }
+
+.display-comments {
+    min-height: 50px;
+    margin-bottom: 20px;
+}
+
+.like-and-comment-div {
+    margin-top: 175px;
+}

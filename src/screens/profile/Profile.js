@@ -53,7 +53,6 @@ const styles = theme => ({
         display: 'flex',
         position: "absolute",
         width: 800,
-        height: 400,
         backgroundColor: "white",
         padding: 16,
         outline: "none",
@@ -309,7 +308,7 @@ class Profile extends Component {
                                         </Typography>
                                     } />
                                     <Divider style={{ marginLeft: 16, backgroundColor: 'rgba(0, 0, 0, 0.3)' }} />
-                                    <CardContent style={{ paddingTop: 10}}>
+                                    <CardContent style={{ paddingTop: 10 }}>
                                         <Typography component="p">
                                             {this.state.selectedImagePost.caption.text.split("\n")[0]}
                                         </Typography>
@@ -320,21 +319,26 @@ class Profile extends Component {
                                                 </Typography>
                                             )
                                         })}
-                                        <div>
-                                        <CardActions style={{ padding: 0, marginTop: 10 }}>
-                                                <IconButton style={{ padding: 0 }}>
-                                                        <FavoriteBorder />
-                                                </IconButton>
-                                            </CardActions>
+                                        <div className="display-comments">
+
                                         </div>
-                                        <div>
-                                            <FormControl className="formControl" style={{ width: '80%' }}>
-                                                <InputLabel htmlFor="commentText">
-                                                    Add a comment{" "}
-                                                </InputLabel>
-                                                <Input id="commentText" type="text" onChange={this.inputCommentAddHandler} value={this.state.newComment} />
-                                            </FormControl>
-                                            <Button className={classes.addCommentBtn} variant="contained" color="primary" onClick={this.onAddCommentHandler}>ADD</Button>
+                                        <div className="like-and-comment-div">
+                                            <div>
+                                                <CardActions style={{ padding: 0, marginTop: 10 }}>
+                                                    <IconButton style={{ padding: 0 }}>
+                                                        <FavoriteBorder />
+                                                    </IconButton>
+                                                </CardActions>
+                                            </div>
+                                            <div>
+                                                <FormControl className="formControl" style={{ width: '80%' }}>
+                                                    <InputLabel htmlFor="commentText">
+                                                        Add a comment{" "}
+                                                    </InputLabel>
+                                                    <Input id="commentText" type="text" onChange={this.inputCommentAddHandler} value={this.state.newComment} />
+                                                </FormControl>
+                                                <Button className={classes.addCommentBtn} variant="contained" color="primary" onClick={this.onAddCommentHandler}>ADD</Button>
+                                            </div>
                                         </div>
                                     </CardContent>
                                 </div>
