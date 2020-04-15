@@ -219,6 +219,28 @@ class Profile extends Component {
         })
     }
 
+    onLikeClickHandler = () => {
+
+        let selectedImagePost = this.state.selectedImagePost;
+        let posts = this.state.userData;
+        const index = this.state.selectedImagePostIndex;
+        if (selectedImagePost.user_has_liked) {
+            selectedImagePost.user_has_liked = false;
+            selectedImagePost.likes.count += 1;
+        } else {
+            selectedImagePost.user_has_liked = true;
+            selectedImagePost.likes.count -= 1;
+        }
+
+        posts[index] = this.selectedImagePost;
+
+        this.setState({
+            selectedImagePost: selectedImagePost,
+            userData: posts
+        });
+
+    }
+
     render() {
 
         const { classes } = this.props;
@@ -326,9 +348,9 @@ class Profile extends Component {
                                         <div className="like-and-comment-div">
                                             <div>
                                                 <CardActions style={{ padding: 0, marginTop: 10, marginBottom: 10 }}>
-                                                    <IconButton style={{ padding: 0 }}>
+                                                    <IconButton style={{ padding: 0 }} onClick={this.onLikeClickHandler}>
                                                         {this.state.selectedImagePost.user_has_liked ?
-                                                            <FavoriteBorder /> :
+                                                            <FavoriteBorder  /> :
                                                             <Favorite style={{ color: 'red' }} />
                                                         }
                                                     </IconButton>
