@@ -14,6 +14,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
+import { GridList, GridListTile } from '@material-ui/core';
 import '../profile/Profile.css';
 
 const styles = theme => ({
@@ -34,7 +35,18 @@ const styles = theme => ({
         top: `50%`,
         left: `50%`,
         transform: `translate(-50%, -50%)`
-    }
+    },
+    imagesGrid: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        overflow: 'hidden',
+        marginTop: 20,
+    },
+    gridList: {
+        width: 1000,
+        height: 'auto',
+    },
 });
 
 class Profile extends Component {
@@ -56,6 +68,7 @@ class Profile extends Component {
             fullname: "",
             isEditModalOpen: false,
             updatedFullName: "",
+            userMediaData: [],
         }
     }
 
@@ -83,6 +96,24 @@ class Profile extends Component {
             xhr.setRequestHeader("Cache-Control", "no-cache");
             xhr.send(info);
         }
+
+        if (sessionStorage.getItem('access-token') !== null) {
+        let media = null;
+        let xhrMedia = new XMLHttpRequest();
+        xhrMedia.addEventListener("readystatechange", function () {
+            if (this.readyState === 4) {
+                const userMediaData = JSON.parse(this.responseText).data;
+                console.log(userMediaData);
+                that.setState({
+                    userMediaData: userMediaData,
+                })
+            }
+        })
+            xhrMedia.open("GET", this.props.userMediaInformation + '/?access_token=' + sessionStorage.getItem('access-token') + '');
+            xhrMedia.setRequestHeader("Cache-Control", "no-cache");
+            xhrMedia.send(media);
+        }
+
         if (sessionStorage.getItem('access-token') !== null) {
             document.getElementById('search-div').style.display = 'none';
             document.getElementById('logo').style.cursor = 'pointer';
@@ -187,7 +218,7 @@ class Profile extends Component {
                                                 <Typography variant="h5" id="edit" className="modal-heading">Edit</Typography>
                                                 <FormControl required className="formControl" style={{ width: '100%' }}>
                                                     <InputLabel htmlFor="username">Full Name</InputLabel>
-                                                    <Input id="fullname" value={this.state.updatedFullName} type="text" onChange={this.fullNameChangeHandler}/>
+                                                    <Input id="fullname" value={this.state.updatedFullName} type="text" onChange={this.fullNameChangeHandler} />
                                                     <FormHelperText className={this.state.fullNameRequired}>
                                                         <span className="red">required</span>
                                                     </FormHelperText>
@@ -200,6 +231,15 @@ class Profile extends Component {
                             </Grid>
                         </CardContent>
                     </Card>
+                </div>
+                <div className={classes.imagesGrid}>
+                    <GridList cellHeight={300} className={classes.gridList} cols={3}>
+                        {(this.state.userMediaData || []).map((imagePost, index) => (
+                            <GridListTile key={imagePost.id}>
+                                <img src={imagePost.images.standard_resolution.url} alt="" />
+                            </GridListTile>
+                        ))}
+                    </GridList>
                 </div>
             </div>
         )
