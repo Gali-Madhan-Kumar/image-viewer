@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../../common/header/Header';
 import Avatar from '@material-ui/core/Avatar';
-import { Card } from '@material-ui/core';
+import { Card, CardMedia, Divider } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/styles';
@@ -26,7 +26,7 @@ const styles = theme => ({
         width: '50px',
         height: '50px',
     },
-    modal: {
+    editModalCard: {
         position: "absolute",
         width: 250,
         backgroundColor: "white",
@@ -46,6 +46,25 @@ const styles = theme => ({
     gridList: {
         width: 1000,
         height: 'auto',
+    },
+    imagePostModalCard: {
+        display: 'flex',
+        position: "absolute",
+        width: 800,
+        backgroundColor: "white",
+        padding: 16,
+        outline: "none",
+        top: `50%`,
+        left: `50%`,
+        transform: `translate(-50%, -50%)`
+    },
+    selectedImage: {
+        width: '50%',
+    },
+    details: {
+        display: 'flex',
+        flexDirection: 'column',
+        width: '50%',
     },
 });
 
@@ -168,10 +187,27 @@ class Profile extends Component {
         }
     }
 
-    onImagePostClickHandler = (postId, index) => {
+    onImagePostClickOpenHandler = (postId, index) => {
+        const userPostedImages = this.state.userMediaData;
         this.setState({
-
+            selectedImagePost: userPostedImages[index],
+            selectedImagePostIndex: index,
+            isPostModalOpen: true,
         });
+    }
+
+    onImagePostClickCloseHandler = () => {
+        this.setState({
+            isPostModalOpen: false,
+            selectedImagePostIndex: -1,
+            selectedImagePost: null,
+        });
+    }
+
+    inputCommentAddHandler = (e) => {
+        this.setState( {
+            newComment: e.target.value,
+        })
     }
 
     render() {
@@ -179,78 +215,117 @@ class Profile extends Component {
         const { classes } = this.props;
 
         return (
-                <div>
-                    <Header userProfileUrl={this.state.profilepicture} logout={this.onLogoutClickHandler} profilePage={this.state.isProfilePage} />
-                    <div className="user-details">
-                        <Card className={classes.detailsCard}>
-                            <CardHeader style={{ paddingBottom: 0 }} avatar={
-                                <Avatar className={classes.avatar} src={this.state.profilepicture} />
-                            } title={
-                                <Typography variant="h5" component="h5" style={{ marginLeft: 18, marginBottom: 5 }}>
-                                    {this.state.username}
-                                </Typography>
-                            }
-                                subheader={
-                                    <Grid container style={{ color: 'black' }} spacing={3} alignItems="center" justify="center">
-                                        <Grid item>
-                                            <Typography variant="subtitle2">
-                                                Posts: {this.state.media}
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item>
-                                            <Typography variant="subtitle2">
-                                                Follows: {this.state.follows}
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item>
-                                            <Typography variant="subtitle2">
-                                                Followed By: {this.state.followedBy}
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                } />
-                            <CardContent style={{ paddingTop: 0 }}>
-                                <Grid container alignItems="center" spacing={2}>
-                                    <Grid item style={{ marginLeft: 85 }}>
-                                        <Typography variant="subtitle1">
-                                            {this.state.fullname}
+            <div>
+                <Header userProfileUrl={this.state.profilepicture} logout={this.onLogoutClickHandler} profilePage={this.state.isProfilePage} />
+                <div className="user-details">
+                    <Card className={classes.detailsCard}>
+                        <CardHeader style={{ paddingBottom: 0 }} avatar={
+                            <Avatar className={classes.avatar} src={this.state.profilepicture} />
+                        } title={
+                            <Typography variant="h5" component="h5" style={{ marginLeft: 18, marginBottom: 5 }}>
+                                {this.state.username}
+                            </Typography>
+                        }
+                            subheader={
+                                <Grid container style={{ color: 'black' }} spacing={3} alignItems="center" justify="center">
+                                    <Grid item>
+                                        <Typography variant="subtitle2">
+                                            Posts: {this.state.media}
                                         </Typography>
                                     </Grid>
                                     <Grid item>
-                                        <Fab style={{ width: 40, height: 40 }} color="secondary" aria-label="edit" onClick={this.editModalOpenHandler}>
-                                            <EditIcon />
-                                        </Fab>
-                                        <Modal open={this.state.isEditModalOpen} onClose={this.editModalCloseHandler}>
-                                            <Card className={classes.modal}>
-                                                <CardContent>
-                                                    <Typography variant="h5" id="edit" className="modal-heading">Edit</Typography>
-                                                    <FormControl required className="formControl" style={{ width: '100%' }}>
-                                                        <InputLabel htmlFor="username">Full Name</InputLabel>
-                                                        <Input id="fullname" value={this.state.updatedFullName} type="text" onChange={this.fullNameChangeHandler} />
-                                                        <FormHelperText className={this.state.fullNameRequired}>
-                                                            <span className="red">required</span>
-                                                        </FormHelperText>
-                                                    </FormControl><br /><br />
-                                                    <Button variant="contained" id="update" color="primary" onClick={this.onUpdateClickHandler}>UPDATE</Button>
-                                                </CardContent>
-                                            </Card>
-                                        </Modal>
+                                        <Typography variant="subtitle2">
+                                            Follows: {this.state.follows}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <Typography variant="subtitle2">
+                                            Followed By: {this.state.followedBy}
+                                        </Typography>
                                     </Grid>
                                 </Grid>
-                            </CardContent>
-                        </Card>
-                    </div>
-                    <div className={classes.imagesGrid}>
-                        <GridList cellHeight={300} className={classes.gridList} cols={3}>
-                            {(this.state.userMediaData || []).map((imagePost, index) => (
-                                <GridListTile key={imagePost.id} onClick={() => this.onImagePostClickHandler(imagePost.id, index)}>
-                                    <img src={imagePost.images.standard_resolution.url} alt="" />
-                                </GridListTile>
-                            ))}
-                        </GridList>
-                    </div>
+                            } />
+                        <CardContent style={{ paddingTop: 0 }}>
+                            <Grid container alignItems="center" spacing={2}>
+                                <Grid item style={{ marginLeft: 85 }}>
+                                    <Typography variant="subtitle1">
+                                        {this.state.fullname}
+                                    </Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Fab style={{ width: 40, height: 40 }} color="secondary" aria-label="edit" onClick={this.editModalOpenHandler}>
+                                        <EditIcon />
+                                    </Fab>
+                                    <Modal open={this.state.isEditModalOpen} onClose={this.editModalCloseHandler}>
+                                        <Card className={classes.editModalCard}>
+                                            <CardContent>
+                                                <Typography variant="h5" id="edit" className="modal-heading">Edit</Typography>
+                                                <FormControl required className="formControl" style={{ width: '100%' }}>
+                                                    <InputLabel htmlFor="username">Full Name</InputLabel>
+                                                    <Input id="fullname" value={this.state.updatedFullName} type="text" onChange={this.fullNameChangeHandler} />
+                                                    <FormHelperText className={this.state.fullNameRequired}>
+                                                        <span className="red">required</span>
+                                                    </FormHelperText>
+                                                </FormControl><br /><br />
+                                                <Button variant="contained" id="update" color="primary" onClick={this.onUpdateClickHandler}>UPDATE</Button>
+                                            </CardContent>
+                                        </Card>
+                                    </Modal>
+                                </Grid>
+                            </Grid>
+                        </CardContent>
+                    </Card>
                 </div>
-                
+                <div className={classes.imagesGrid}>
+                    <GridList cellHeight={300} className={classes.gridList} cols={3}>
+                        {(this.state.userMediaData || []).map((imagePost, index) => (
+                            <GridListTile key={imagePost.id} onClick={() => this.onImagePostClickOpenHandler(imagePost.id, index)}>
+                                <img src={imagePost.images.standard_resolution.url} alt="" />
+                            </GridListTile>
+                        ))}
+                    </GridList>
+                    {this.state.selectedImagePost !== null ?
+                        <Modal open={this.state.isPostModalOpen} onClose={this.onImagePostClickCloseHandler}>
+                            <Card className={classes.imagePostModalCard}>
+                                <CardMedia
+                                    className={classes.selectedImage}
+                                    image={this.state.selectedImagePost.images.standard_resolution.url}
+                                />
+                                <div className={classes.details}>
+                                    <CardHeader avatar={
+                                        <Avatar src={this.state.selectedImagePost.user.profile_picture} alt="" />
+                                    } title={
+                                        <Typography variant="h6" component="h6">
+                                            {this.state.selectedImagePost.user.username}
+                                        </Typography>
+                                    } />
+                                    <Divider style={{ width: 368, margin: 'auto', backgroundColor: 'rgba(0, 0, 0, 0.3)' }} />
+                                    <CardContent>
+                                        <Typography component="p">
+                                            {this.state.selectedImagePost.caption.text.split("\n")[0]}
+                                        </Typography>
+                                        {(this.state.selectedImagePost.tags || []).map((tag, index) => {
+                                            return (
+                                                <Typography key={tag} variant="caption" color="primary">
+                                                    {" "}#{tag}
+                                                </Typography>
+                                            )
+                                        })}
+                                        <FormControl className="formControl">
+                                            <InputLabel htmlFor="addcomment">
+                                                Add a comment{" "}
+                                            </InputLabel>
+                                            <Input id="addcomment" type="text" onChange={this.inputCommentAddHandler} value={this.state.newComment}/>
+                                        </FormControl>
+                                    </CardContent>
+                                </div>
+                            </Card>
+                        </Modal>
+                        : ""
+                    }
+                </div>
+            </div>
+
         )
     }
 }
