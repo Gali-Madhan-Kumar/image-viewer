@@ -12,9 +12,12 @@ import CardContent from '@material-ui/core/CardContent';
 import Modal from '@material-ui/core/Modal';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
+import CardActions from '@material-ui/core/CardActions';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
+import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import { GridList, GridListTile } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
 import '../profile/Profile.css';
 
 const styles = theme => ({
@@ -60,6 +63,7 @@ const styles = theme => ({
     },
     selectedImage: {
         width: '50%',
+        backgroundSize: '100% 100%'
     },
     details: {
         display: 'flex',
@@ -297,15 +301,15 @@ class Profile extends Component {
                                     image={this.state.selectedImagePost.images.standard_resolution.url}
                                 />
                                 <div className={classes.details}>
-                                    <CardHeader style={{ paddingBottom: 5 }} avatar={
+                                    <CardHeader style={{ paddingBottom: 5, paddingTop: 0 }} avatar={
                                         <Avatar src={this.state.selectedImagePost.user.profile_picture} alt="" />
                                     } title={
                                         <Typography variant="h6" component="h6">
                                             {this.state.selectedImagePost.user.username}
                                         </Typography>
                                     } />
-                                    <Divider style={{ width: 368, marginLeft: 16, backgroundColor: 'rgba(0, 0, 0, 0.3)' }} />
-                                    <CardContent>
+                                    <Divider style={{ marginLeft: 16, backgroundColor: 'rgba(0, 0, 0, 0.3)' }} />
+                                    <CardContent style={{ paddingTop: 10}}>
                                         <Typography component="p">
                                             {this.state.selectedImagePost.caption.text.split("\n")[0]}
                                         </Typography>
@@ -316,6 +320,13 @@ class Profile extends Component {
                                                 </Typography>
                                             )
                                         })}
+                                        <div>
+                                        <CardActions style={{ padding: 0, marginTop: 10 }}>
+                                                <IconButton style={{ padding: 0 }}>
+                                                        <FavoriteBorder />
+                                                </IconButton>
+                                            </CardActions>
+                                        </div>
                                         <div>
                                             <FormControl className="formControl" style={{ width: '80%' }}>
                                                 <InputLabel htmlFor="commentText">
