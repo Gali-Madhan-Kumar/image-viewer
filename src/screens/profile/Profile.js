@@ -45,12 +45,12 @@ const styles = theme => ({
     },
     gridList: {
         width: 1000,
-        height: 'auto',
     },
     imagePostModalCard: {
         display: 'flex',
         position: "absolute",
         width: 800,
+        height: 400,
         backgroundColor: "white",
         padding: 16,
         outline: "none",
@@ -66,6 +66,11 @@ const styles = theme => ({
         flexDirection: 'column',
         width: '50%',
     },
+    addCommentBtn: {
+        width: '18%',
+        marginTop: 12,
+        marginLeft: '2%',
+    }
 });
 
 class Profile extends Component {
@@ -205,7 +210,7 @@ class Profile extends Component {
     }
 
     inputCommentAddHandler = (e) => {
-        this.setState( {
+        this.setState({
             newComment: e.target.value,
         })
     }
@@ -292,14 +297,14 @@ class Profile extends Component {
                                     image={this.state.selectedImagePost.images.standard_resolution.url}
                                 />
                                 <div className={classes.details}>
-                                    <CardHeader avatar={
+                                    <CardHeader style={{ paddingBottom: 5 }} avatar={
                                         <Avatar src={this.state.selectedImagePost.user.profile_picture} alt="" />
                                     } title={
                                         <Typography variant="h6" component="h6">
                                             {this.state.selectedImagePost.user.username}
                                         </Typography>
                                     } />
-                                    <Divider style={{ width: 368, margin: 'auto', backgroundColor: 'rgba(0, 0, 0, 0.3)' }} />
+                                    <Divider style={{ width: 368, marginLeft: 16, backgroundColor: 'rgba(0, 0, 0, 0.3)' }} />
                                     <CardContent>
                                         <Typography component="p">
                                             {this.state.selectedImagePost.caption.text.split("\n")[0]}
@@ -311,12 +316,15 @@ class Profile extends Component {
                                                 </Typography>
                                             )
                                         })}
-                                        <FormControl className="formControl">
-                                            <InputLabel htmlFor="addcomment">
-                                                Add a comment{" "}
-                                            </InputLabel>
-                                            <Input id="addcomment" type="text" onChange={this.inputCommentAddHandler} value={this.state.newComment}/>
-                                        </FormControl>
+                                        <div>
+                                            <FormControl className="formControl" style={{ width: '80%' }}>
+                                                <InputLabel htmlFor="commentText">
+                                                    Add a comment{" "}
+                                                </InputLabel>
+                                                <Input id="commentText" type="text" onChange={this.inputCommentAddHandler} value={this.state.newComment} />
+                                            </FormControl>
+                                            <Button className={classes.addCommentBtn} variant="contained" color="primary" onClick={this.onAddCommentHandler}>ADD</Button>
+                                        </div>
                                     </CardContent>
                                 </div>
                             </Card>
