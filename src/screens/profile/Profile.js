@@ -99,10 +99,41 @@ class Profile extends Component {
 
     editModalOpenHandler = () => {
         this.setState({
-            updatedFullName: this.state.fullnname,
-            isEditModalOpen: true
+            updatedFullName: this.state.fullname,
+            isEditModalOpen: true,
         });
     };
+
+    editModlaCloseHandler = () => {
+        this.setState({
+            isEditModalOpen: false,
+            fullNameRequired: "dispNone",
+        });
+    }
+
+    fullNameChangeHandler = (e) => {
+        this.setState({
+            updatedFullName: e.target.value,
+        })
+    }
+
+    onUpdateClickHandler = () => {
+
+        this.state.updatedFullName === "" ? this.setState({
+            fullNameRequired: "dispBlock",
+        }) : this.setState({
+            fullNameRequired: "dispNone",
+        });
+
+        if (this.state.updatedFullName === "") {
+            return;
+        } else {
+            this.setState({
+                fullname: this.state.updatedFullName,
+                isEditModalOpen: false,
+            });
+        }
+    }
 
     render() {
 
@@ -156,12 +187,12 @@ class Profile extends Component {
                                                 <Typography variant="h5" id="edit" className="modal-heading">Edit</Typography>
                                                 <FormControl required className="formControl" style={{ width: '100%' }}>
                                                     <InputLabel htmlFor="username">Full Name</InputLabel>
-                                                    <Input id="fullname" type="text" />
+                                                    <Input id="fullname" value={this.state.updatedFullName} type="text" onChange={this.fullNameChangeHandler}/>
                                                     <FormHelperText className={this.state.fullNameRequired}>
-                                                        <span className="red">Required</span>
+                                                        <span className="red">required</span>
                                                     </FormHelperText>
                                                 </FormControl><br /><br />
-                                                <Button variant="contained" id="update" color="primary">UPDATE</Button>
+                                                <Button variant="contained" id="update" color="primary" onClick={this.onUpdateClickHandler}>UPDATE</Button>
                                             </CardContent>
                                         </Card>
                                     </Modal>
