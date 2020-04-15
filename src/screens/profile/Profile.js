@@ -69,6 +69,10 @@ class Profile extends Component {
             isEditModalOpen: false,
             updatedFullName: "",
             userMediaData: [],
+            newComment: "",
+            selectedImagePost: null,
+            selectedImagePostIndex: -1,
+            isPostModalOpen: false,
         }
     }
 
@@ -164,6 +168,12 @@ class Profile extends Component {
         }
     }
 
+    onImagePostClickHandler = (postId, index) => {
+        this.setState({
+
+        });
+    }
+
     render() {
 
         const { classes } = this.props;
@@ -233,7 +243,7 @@ class Profile extends Component {
                     <div className={classes.imagesGrid}>
                         <GridList cellHeight={300} className={classes.gridList} cols={3}>
                             {(this.state.userMediaData || []).map((imagePost, index) => (
-                                <GridListTile key={imagePost.id}>
+                                <GridListTile key={imagePost.id} onClick={() => this.onImagePostClickHandler(imagePost.id, index)}>
                                     <img src={imagePost.images.standard_resolution.url} alt="" />
                                 </GridListTile>
                             ))}
