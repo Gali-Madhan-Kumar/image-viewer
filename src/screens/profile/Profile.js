@@ -241,6 +241,31 @@ class Profile extends Component {
 
     }
 
+    onAddCommentHandler = () => {
+        if (this.state.newComment === "") {
+            return;
+        } else {
+            let selectedImagePost = this.state.selectedImagePost;
+            selectedImagePost.comments["data"] = selectedImagePost.comments["data"] || [];
+            selectedImagePost.comments["data"].push({
+                id: selectedImagePost.comments["data"].length + 1,
+                comment_by: this.state.username,
+                comment_value: this.state.newComment
+            });
+
+            let posts = this.state.userData;
+            const index = this.state.selectedImagePostIndex;
+            posts[index] = this.selectedImagePost;
+
+            this.setState({
+                selectedImagePost: selectedImagePost,
+                userData: posts,
+                newComment: "",
+
+            });
+        }
+    }
+
     render() {
 
         const { classes } = this.props;
@@ -343,14 +368,23 @@ class Profile extends Component {
                                             )
                                         })}
                                         <div className="display-comments">
-
+                                        <Grid className="comments-grid">
+                                                <Grid >
+                                                    {(this.state.selectedImagePost.comments.data || []).map((comment) => {
+                                                        return <Typography style={{ marginTop: 10, marginBottom: 10 }} key={comment.id}>
+                                                            <span className="commented-by"><b>{comment.comment_by}:</b></span>
+                                                            <span className="comment"> {comment.comment_value}</span>
+                                                        </Typography>
+                                                    })}
+                                                </Grid>
+                                            </Grid>
                                         </div>
                                         <div className="like-and-comment-div">
                                             <div>
                                                 <CardActions style={{ padding: 0, marginTop: 10, marginBottom: 10 }}>
                                                     <IconButton style={{ padding: 0 }} onClick={this.onLikeClickHandler}>
                                                         {this.state.selectedImagePost.user_has_liked ?
-                                                            <FavoriteBorder  /> :
+                                                            <FavoriteBorder /> :
                                                             <Favorite style={{ color: 'red' }} />
                                                         }
                                                     </IconButton>
