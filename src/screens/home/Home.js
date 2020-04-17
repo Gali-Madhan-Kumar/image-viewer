@@ -240,7 +240,7 @@ class Home extends Component {
                                             </Typography>
                                             {details.tags.map((tag, index) => <span key={"hash" + details.id + index}
                                                 className={classes.tags}>#{tag} </span>)}
-                                            <CardActions style={{ padding: 0, marginTop: 10 }}>
+                                                <CardActions style={{ padding: 0, marginTop: 20, marginBottom: 10 }}>
                                                 <IconButton style={{ padding: 0 }} onClick={this.onLikeButtonClickHandler.bind(this, details.id, index)}>
                                                     {details.user_has_liked ?
                                                         <FavoriteBorder />
@@ -267,7 +267,7 @@ class Home extends Component {
                                         </div>
                                         <div className="input-comment">
                                             <CardActions style={{ padding: 0 }}>
-                                                <FormControl className="commentInputBox" style={{ marginLeft: 0 }}>
+                                                <FormControl className="commentInputBox" style={{ marginLeft: 0, }}>
                                                     <InputLabel htmlFor="comment">Add a Comment</InputLabel>
                                                     <Input id={"comment" + details.id} type="text" onChange={this.onCommentValueHandler} />
                                                 </FormControl>
