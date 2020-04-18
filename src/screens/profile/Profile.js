@@ -368,7 +368,7 @@ class Profile extends Component {
                                             )
                                         })}
                                         <div className="display-comments">
-                                        <Grid className="comments-grid">
+                                            <Grid className="comments-grid">
                                                 <Grid >
                                                     {(this.state.selectedImagePost.comments.data || []).map((comment) => {
                                                         return <Typography style={{ marginTop: 10, marginBottom: 10 }} key={comment.id}>

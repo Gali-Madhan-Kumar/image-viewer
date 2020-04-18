@@ -47,6 +47,10 @@ class Login extends Component {
 
     loginClickHandler = () => {
 
+        let username = "user";
+        let password = "password";
+        let accessToken = "8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784";
+
         this.setState({ incorrectUsernamePassword: "dispNone" });
 
         this.state.username === "" ? this.setState({ usernameRequired: "dispBlock" }) : this.setState({ usernameRequired: "dispNone" });
@@ -56,8 +60,8 @@ class Login extends Component {
             return; 
         }
 
-        if (this.state.username === "user" && this.state.password === "password") {
-            sessionStorage.setItem('access-token', '8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784');
+        if (this.state.username === username && this.state.password === password) {
+            sessionStorage.setItem('access-token', accessToken);
             this.setState({ loggedIn: true });
             this.toHomePage();
         } else {
