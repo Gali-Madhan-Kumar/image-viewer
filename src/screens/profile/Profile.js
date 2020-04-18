@@ -81,7 +81,7 @@ class Profile extends Component {
 
     constructor(props) {
         super(props);
-        if (sessionStorage.getItem('access-token') == null) {
+        if (sessionStorage.getItem('access-token') == null || sessionStorage.getItem('access-token') !== "8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784") {
             props.history.replace('/');
         }
         this.state = {
@@ -108,7 +108,7 @@ class Profile extends Component {
 
         let that = this;
 
-        if (sessionStorage.getItem('access-token') !== null) {
+        if (sessionStorage.getItem('access-token') !== null && sessionStorage.getItem('access-token') === "8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784") {
             let info = null;
             let xhr = new XMLHttpRequest();
             xhr.addEventListener("readystatechange", function () {
@@ -134,7 +134,6 @@ class Profile extends Component {
             xhrMedia.addEventListener("readystatechange", function () {
                 if (this.readyState === 4) {
                     const userMediaData = JSON.parse(this.responseText).data;
-                    console.log(userMediaData);
                     that.setState({
                         userMediaData: userMediaData,
                     })
@@ -160,7 +159,6 @@ class Profile extends Component {
 
     editModalOpenHandler = () => {
         this.setState({
-            updatedFullName: this.state.fullname,
             isEditModalOpen: true,
         });
     };
@@ -186,12 +184,11 @@ class Profile extends Component {
             fullNameRequired: "dispNone",
         });
 
-        if (this.state.updatedFullName === "") {
-            return;
-        } else {
+        if (this.state.updatedFullName !== "") {
             this.setState({
                 fullname: this.state.updatedFullName,
                 isEditModalOpen: false,
+                updatedFullName: "",
             });
         }
     }
@@ -272,7 +269,7 @@ class Profile extends Component {
 
         return (
             <div>
-                <Header userProfileUrl={this.state.profilepicture} logout={this.onLogoutClickHandler} profilePage={this.state.isProfilePage} />
+                <Header userProfile={this.state.profilepicture} logout={this.onLogoutClickHandler} profilePage={this.state.isProfilePage} />
                 <div className="user-details">
                     <Card className={classes.detailsCard}>
                         <CardHeader style={{ paddingBottom: 0 }} avatar={
@@ -318,7 +315,7 @@ class Profile extends Component {
                                                 <Typography variant="h5" id="edit" className="modal-heading">Edit</Typography>
                                                 <FormControl required className="formControl" style={{ width: '100%' }}>
                                                     <InputLabel htmlFor="username">Full Name</InputLabel>
-                                                    <Input id="fullname" value={this.state.updatedFullName} type="text" onChange={this.fullNameChangeHandler} />
+                                                    <Input id="fullname" type="text" onChange={this.fullNameChangeHandler} />
                                                     <FormHelperText className={this.state.fullNameRequired}>
                                                         <span className="red">required</span>
                                                     </FormHelperText>

@@ -34,7 +34,7 @@ class Home extends Component {
 
     constructor(props) {
         super(props);
-        if (sessionStorage.getItem('access-token') == null) {
+        if (sessionStorage.getItem('access-token') === null || sessionStorage.getItem('access-token') !== "8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784") {
             props.history.replace('/');
         }
         this.state = {
@@ -44,7 +44,7 @@ class Home extends Component {
             filteredPosts: null,
             search: false,
             isHomePage: true,
-
+            profilePicture: null,
         }
     }
 
@@ -52,21 +52,19 @@ class Home extends Component {
 
         let that = this;
 
-        if (sessionStorage.getItem('access-token') !== null) {
+        if (sessionStorage.getItem('access-token') !== null && sessionStorage.getItem('access-token') === "8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784") {
             let info = null;
             let xhr = new XMLHttpRequest();
             xhr.addEventListener("readystatechange", function () {
                 if (this.readyState === 4) {
                     var data = JSON.parse(this.responseText).data;
-                    that.setState({ userData: data })
+                    that.setState({ userData: data, profilePicture: data.profile_picture })
                 }
             })
             xhr.open("GET", this.props.userInformationUrl + '/?access_token=' + sessionStorage.getItem('access-token') + '');
             xhr.setRequestHeader("Cache-Control", "no-cache");
             xhr.send(info);
-        }
 
-        if (sessionStorage.getItem('access-token') !== null) {
             let userMediaInfo = null;
             let userMediaXhr = new XMLHttpRequest();
             userMediaXhr.addEventListener("readystatechange", function () {
@@ -218,13 +216,13 @@ class Home extends Component {
         return (
             this.mounted ?
                 <div>
-                    <Header userProfileUrl={this.state.userData.profile_picture} logout={this.onLogoutClickHandler} profilepage={this.onMyProfileClickHandler} search={this.onSearch} homePage={this.state.isHomePage} />
+                    <Header userProfile={this.state.profilePicture} logout={this.onLogoutClickHandler} profilepage={this.onMyProfileClickHandler} search={this.onSearch} homePage={this.state.isHomePage} />
                     <div className="post-card">
                         {(this.state.filteredPosts || []).map((details, index) => (
                             <div className="post" key={details.id}>
                                 <Card className={classes.imagePostCard}>
                                     <CardHeader avatar={<Icon>
-                                        <Avatar src={details.user.profile_picture} />
+                                        <Avatar src={this.state.profilePicture} />
                                     </Icon>}
                                         title={details.user.username}
                                         subheader={this.postCreatedTime(details.created_time)}
