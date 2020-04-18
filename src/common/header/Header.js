@@ -16,6 +16,7 @@ const styles = {
 }
 
 const useStyles = theme => ({
+    // styling the search box according to the instructions
     searchBox: {
         borderRadius: 4,
         backgroundColor: '#c0c0c0',
@@ -33,12 +34,14 @@ class Header extends Component {
         }
     }
 
+    // opens popover menu onclicking profileicon inside header by setting state to true
     onOpenMenuHandler = () => {
         this.setState({
             isOpen: true,
         });
     }
 
+    // closes popover menu by setting as false
     onCloseMenuHandler = () => {
         this.setState({
             isOpen: false
@@ -49,11 +52,13 @@ class Header extends Component {
         const { classes } = this.props;
         return (
             <div>
+                {/* displays header without search box and profile icon in login page */}
                 {(sessionStorage.getItem('access-token') === null || sessionStorage.getItem('access-token') !== "8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784" ?
                     <header className="app-header">
                         <span className="app-logo">Image Viewer</span>
                     </header>
                     :
+                    // displays header with search box and profile icon in home page 
                     <header className="app-header">
                         <span id="logo" className="app-logo">Image Viewer</span>
                         <div className={classes.searchBox} id="search-div">
@@ -65,10 +70,12 @@ class Header extends Component {
                             </div>
                         </div>
                         <div className="userProfile">
-                            <IconButton id="menu" onClick={this.onOpenMenuHandler}>
+                            <IconButton disableRipple={true} id="menu" onClick={this.onOpenMenuHandler}>
                                 <Avatar alt="User Profile Pic" src={this.props.userProfile} />
                             </IconButton>
                             <div>
+                                {/* menu displays my account and logout options when user clicks on profile icon inside home page, 
+                                in profile page menu displays only logout option to user when click on profile icon */}
                                 <Menu
                                     id="simple-menu"
                                     keepMounted

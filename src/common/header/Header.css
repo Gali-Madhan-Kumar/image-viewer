@@ -1,34 +1,40 @@
+/* css for header */
 .app-header {
-    background-color: #263238;
-    height: 80px;
-    display: flex;
-    align-items: center;
+    background-color: #263238; /* background color in hex */
+    height: 80px; /* height of the header is 80px */
+    display: flex; /* display is flex */
+    align-items: center; /* items inside header are aligned to center of the header */
 }
 
+/* css for logo text inside header */
 .app-logo {
-    color: #fff;
-    margin: 10px;
-    font-size: 18px;
+    color: #fff; /* color is white */
+    margin: 10px; /* margin is 10px in all the four sides */
+    font-size: 18px; /* font size of the logo text is 18px */
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     flex: 1;
 } 
 
+/* css code for search icon  */
 .searchIcon {
-    display: flex;
-    align-items: center;
-    margin: 2px;
+    display: flex; /* display is flex */
+    align-items: center; /* vertically align center */
+    margin: 2px; /* margin is 2px in all the four sides */
 }
 
+/* css code for input field of for search inside header */
 .searchInput {
-    width: 90%;
+    width: 90%; /* width is 90% */
 }
 
+/* css code for popover menu  */
 .MuiPopover-paper {
     left: 1285px;
     margin: 5px;
     width: 140px;
 }
 
+/* css code for menu list inside the header */
 .MuiMenu-list {
     display: block;
     flex-direction: column;
