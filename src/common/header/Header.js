@@ -6,10 +6,10 @@ import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { fade, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = {
-    
+
     searchInputField: {
         width: '100%',
     },
@@ -21,10 +21,6 @@ const useStyles = theme => ({
         backgroundColor: '#c0c0c0',
         width: 300,
         display: 'flex',
-        opacity: 1,
-        '&:hover': {
-            backgroundColor: fade('#c0c0c0', 0.75),
-        },
     },
 });
 
@@ -53,7 +49,7 @@ class Header extends Component {
         const { classes } = this.props;
         return (
             <div>
-                {(sessionStorage.getItem('access-token') == null ?
+                {(sessionStorage.getItem('access-token') === null || sessionStorage.getItem('access-token') !== "8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784" ?
                     <header className="app-header">
                         <span className="app-logo">Image Viewer</span>
                     </header>
@@ -70,7 +66,7 @@ class Header extends Component {
                         </div>
                         <div className="userProfile">
                             <IconButton id="menu" onClick={this.onOpenMenuHandler}>
-                                <Avatar alt="User Profile Pic" src={this.props.userProfileUrl} />
+                                <Avatar alt="User Profile Pic" src={this.props.userProfile} />
                             </IconButton>
                             <div>
                                 <Menu
