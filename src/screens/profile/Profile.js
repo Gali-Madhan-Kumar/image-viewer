@@ -74,6 +74,24 @@ const styles = theme => ({
         width: '18%',
         marginTop: 12,
         marginLeft: '2%',
+    },
+    userDetailsProfielIcon: {
+        '&:hover': {
+            backgroundColor: 'transparent !important',
+        }
+    },
+    profilePicModalCard: {
+        display: 'flex',
+        position: "absolute",
+        backgroundColor: "white",
+        padding: 16,
+        outline: "none",
+        top: '50%',
+        left: `50%`,
+        transform: 'translate(-50%, -50%)'
+    },
+    profilePicImage: {
+        width: '100%',
     }
 });
 
@@ -101,6 +119,7 @@ class Profile extends Component {
             selectedImagePost: null,
             selectedImagePostIndex: -1,
             isPostModalOpen: false,
+            isProfilePicModalOpen: false,
         }
     }
 
@@ -263,6 +282,18 @@ class Profile extends Component {
         }
     }
 
+    onOpenProfilePicModalHandler = () => {
+        this.setState({
+            isProfilePicModalOpen: true,
+        });
+    }
+
+    onCloseProfilePicModalHandler = () => {
+        this.setState({
+            isProfilePicModalOpen: false,
+        });
+    }
+
     render() {
 
         const { classes } = this.props;
@@ -273,7 +304,9 @@ class Profile extends Component {
                 <div className="user-details">
                     <Card className={classes.detailsCard}>
                         <CardHeader style={{ paddingBottom: 0 }} avatar={
-                            <Avatar className={classes.avatar} src={this.state.profilepicture} />
+                            <IconButton className={classes.userDetailsProfielIcon} onClick={this.onOpenProfilePicModalHandler}>
+                                <Avatar className={classes.avatar} src={this.state.profilepicture} />
+                            </IconButton>
                         } title={
                             <Typography variant="h5" component="h5" style={{ marginLeft: 18, marginBottom: 5 }}>
                                 {this.state.username}
@@ -298,6 +331,15 @@ class Profile extends Component {
                                     </Grid>
                                 </Grid>
                             } />
+                        <div>
+                            <Modal open={this.state.isProfilePicModalOpen} onClose={this.onCloseProfilePicModalHandler}>
+                                <Card className={classes.profilePicModalCard}>
+                                    <CardContent>
+                                        <img className={classes.profilePicImage} src={this.state.profilepicture} alt="" />
+                                    </CardContent>
+                                </Card>
+                            </Modal>
+                        </div>
                         <CardContent style={{ paddingTop: 0 }}>
                             <Grid container alignItems="center" spacing={2}>
                                 <Grid item style={{ marginLeft: 85 }}>

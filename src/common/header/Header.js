@@ -70,7 +70,7 @@ class Header extends Component {
                             </div>
                         </div>
                         <div className="userProfile">
-                            <IconButton id="menu" onClick={this.onOpenMenuHandler}>
+                            <IconButton disableRipple={true} id="menu" onClick={this.onOpenMenuHandler}>
                                 <Avatar alt="User Profile Pic" src={this.props.userProfile} />
                             </IconButton>
                             <div>
