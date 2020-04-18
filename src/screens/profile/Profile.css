@@ -1,33 +1,41 @@
+/* css code for displaying the user information */
 .user-details {
-    display: flex;
-    justify-content: center;
+    display: flex; /* display is flex */
+    justify-content: center; /* items are horizontally aligned to center */
 }
 
+/* css code for edit icon */
 #edit {
-    margin-bottom: 25px;
+    margin-bottom: 25px; /* margin on bottom side is 25px */
 }
 
+/* css code for update button inside the edit modal */
 #update {
-    margin-top: 20px;
+    margin-top: 20px; /* margin on top side is 20px */
 }
 
+/* css code for changing the color of like button to red when user clicks on it */
 .red {
     color: red;
 }
 
+/* css code for not displaying required message when user enters value inside the input field */
 .dispNone {
-    display: none;
+    display: none; /* display is none */
 }
 
+/* css code for displaying required message when user tries to submit the modal without value inside the input field */
 .dispBlock {
-    display: block;
+    display: block; /* display is block */
 }
 
+/* css code for displaying comments inside the imagepost modal */
 .display-comments {
-    min-height: 50px;
-    margin-bottom: 20px;
+    min-height: 50px; /* minimum height of the div is 50px */
+    margin-bottom: 20px; /* margin on bottom side is 20px */
 }
 
+/* css code for like and comment div */
 .like-and-comment-div {
-    margin-top: 175px;
+    margin-top: 175px; /* margin on top side is 175px */
 }

@@ -99,6 +99,7 @@ class Profile extends Component {
 
     constructor(props) {
         super(props);
+        //if the user tries to go to profile page without login then it will display the login page
         if (sessionStorage.getItem('access-token') == null || sessionStorage.getItem('access-token') !== "8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784") {
             props.history.replace('/');
         }
@@ -123,10 +124,12 @@ class Profile extends Component {
         }
     }
 
+    //methods calls only after the page loads
     componentDidMount() {
 
         let that = this;
 
+        //api's get fetched only after successfull login 
         if (sessionStorage.getItem('access-token') !== null && sessionStorage.getItem('access-token') === "8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784") {
             let info = null;
             let xhr = new XMLHttpRequest();
@@ -162,8 +165,11 @@ class Profile extends Component {
             xhrMedia.setRequestHeader("Cache-Control", "no-cache");
             xhrMedia.send(media);
 
+            //after the page loads disable the search field inside header in profile page
             document.getElementById('search-div').style.display = 'none';
+            //changes the cursor to pointer for logo inside header in profile page
             document.getElementById('logo').style.cursor = 'pointer';
+            //when the user clicks on the logo in profile page it will redirects to home page of the user
             document.getElementById('logo').addEventListener("click", function () {
                 window.location.href = "/home";
             });
@@ -171,17 +177,20 @@ class Profile extends Component {
 
     }
 
+    //when user clicks on the logout option in profile icon then it will remove the access-token inside the session Storage and redirects to login page
     onLogoutClickHandler = () => {
         sessionStorage.removeItem('access-token');
         this.props.history.push('/');
     }
 
+    //edit modal is opened by setting state of isEditModalOpen to true
     editModalOpenHandler = () => {
         this.setState({
             isEditModalOpen: true,
         });
     };
 
+    //closes the edit modla by setting the state of isEditModalOpen to false
     editModlaCloseHandler = () => {
         this.setState({
             isEditModalOpen: false,
@@ -189,12 +198,14 @@ class Profile extends Component {
         });
     }
 
+    //updates the fullname of the user when user types the name in the fullname input field
     fullNameChangeHandler = (e) => {
         this.setState({
             updatedFullName: e.target.value,
         })
     }
 
+    //when user clicks the update button inside the edit modal without entering the fullname then it displays required message
     onUpdateClickHandler = () => {
 
         this.state.updatedFullName === "" ? this.setState({
@@ -212,6 +223,7 @@ class Profile extends Component {
         }
     }
 
+    //displays the image post modal when user clicks on the post
     onImagePostClickOpenHandler = (postId, index) => {
         const userPostedImages = this.state.userMediaData;
         this.setState({
@@ -221,6 +233,7 @@ class Profile extends Component {
         });
     }
 
+    //closes the image post modal
     onImagePostClickCloseHandler = () => {
         this.setState({
             isPostModalOpen: false,
@@ -229,12 +242,14 @@ class Profile extends Component {
         });
     }
 
+    //user comment is stored inside the state variable newComment 
     inputCommentAddHandler = (e) => {
         this.setState({
             newComment: e.target.value,
         })
     }
 
+    //when user clicks the like button inside the image post modal it will increment the likes to +1 and again if user clicks the like button then likes will be decremented by 1
     onLikeClickHandler = () => {
 
         let selectedImagePost = this.state.selectedImagePost;
@@ -257,6 +272,7 @@ class Profile extends Component {
 
     }
 
+    //comment is displayed once the user clicks on the add button inside the image post modal
     onAddCommentHandler = () => {
         if (this.state.newComment === "") {
             return;
@@ -282,12 +298,14 @@ class Profile extends Component {
         }
     }
 
+    //opens the profilepicture modal
     onOpenProfilePicModalHandler = () => {
         this.setState({
             isProfilePicModalOpen: true,
         });
     }
 
+    //closes the profilepicture modal
     onCloseProfilePicModalHandler = () => {
         this.setState({
             isProfilePicModalOpen: false,
@@ -302,6 +320,7 @@ class Profile extends Component {
             <div>
                 <Header userProfile={this.state.profilepicture} logout={this.onLogoutClickHandler} profilePage={this.state.isProfilePage} />
                 <div className="user-details">
+                    {/* user information card to display the profile picture, username, posts, follows and followed_by, and fullname and edit icon */}
                     <Card className={classes.detailsCard}>
                         <CardHeader style={{ paddingBottom: 0 }} avatar={
                             <IconButton className={classes.userDetailsProfielIcon} onClick={this.onOpenProfilePicModalHandler}>
@@ -332,6 +351,7 @@ class Profile extends Component {
                                 </Grid>
                             } />
                         <div>
+                            {/* modal to display when user clicks the profilepicture in information section */}
                             <Modal open={this.state.isProfilePicModalOpen} onClose={this.onCloseProfilePicModalHandler}>
                                 <Card className={classes.profilePicModalCard}>
                                     <CardContent>
@@ -348,10 +368,12 @@ class Profile extends Component {
                                     </Typography>
                                 </Grid>
                                 <Grid item>
+                                    {/* code for edit icon */}
                                     <Fab style={{ width: 40, height: 40 }} color="secondary" aria-label="edit" onClick={this.editModalOpenHandler}>
                                         <EditIcon />
                                     </Fab>
-                                    <Modal open={this.state.isEditModalOpen} onClose={this.editModalCloseHandler}>
+                                    {/* code for  edit fullname modal */}
+                                    <Modal open={this.state.isEditModalOpen} onClose={this.editModlaCloseHandler}>
                                         <Card className={classes.editModalCard}>
                                             <CardContent>
                                                 <Typography variant="h5" id="edit" className="modal-heading">Edit</Typography>
@@ -371,6 +393,7 @@ class Profile extends Component {
                         </CardContent>
                     </Card>
                 </div>
+                {/* code for displaying the imageposts of a user in grid */}
                 <div className={classes.imagesGrid}>
                     <GridList cellHeight={300} className={classes.gridList} cols={3}>
                         {(this.state.userMediaData || []).map((imagePost, index) => (
@@ -380,12 +403,15 @@ class Profile extends Component {
                         ))}
                     </GridList>
                     {this.state.selectedImagePost !== null ?
+                        // code to display the image post modal when user clicks on the image post
                         <Modal open={this.state.isPostModalOpen} onClose={this.onImagePostClickCloseHandler}>
                             <Card className={classes.imagePostModalCard}>
+                                {/* card media to display the image of post on left side of the modal */}
                                 <CardMedia
                                     className={classes.selectedImage}
                                     image={this.state.selectedImagePost.images.standard_resolution.url}
                                 />
+                                {/* code to display the profile picture of a user and fullname of the use on right side of the modal and a divider after the card header */}
                                 <div className={classes.details}>
                                     <CardHeader style={{ paddingBottom: 5, paddingTop: 0 }} avatar={
                                         <Avatar src={this.state.selectedImagePost.user.profile_picture} alt="" />
@@ -395,6 +421,7 @@ class Profile extends Component {
                                         </Typography>
                                     } />
                                     <Divider style={{ marginLeft: 16, backgroundColor: 'rgba(0, 0, 0, 0.3)' }} />
+                                    {/* code for displaying the caption and tags inside the image post modal */}
                                     <CardContent style={{ paddingTop: 10 }}>
                                         <Typography component="p">
                                             {this.state.selectedImagePost.caption.text.split("\n")[0]}
@@ -406,6 +433,7 @@ class Profile extends Component {
                                                 </Typography>
                                             )
                                         })}
+                                        {/* display-comments div is for displaying the user comments */}
                                         <div className="display-comments">
                                             <Grid className="comments-grid">
                                                 <Grid >
@@ -421,6 +449,7 @@ class Profile extends Component {
                                         <div className="like-and-comment-div">
                                             <div>
                                                 <CardActions style={{ padding: 0, marginTop: 10, marginBottom: 10 }}>
+                                                    {/* code for like button and displaying total no of likes  */}
                                                     <IconButton style={{ padding: 0 }} onClick={this.onLikeClickHandler}>
                                                         {this.state.selectedImagePost.user_has_liked ?
                                                             <FavoriteBorder /> :
@@ -433,6 +462,7 @@ class Profile extends Component {
                                                 </CardActions>
                                             </div>
                                             <div>
+                                                {/* code for comment input field inside image post modal */}
                                                 <FormControl className="formControl" style={{ width: '80%' }}>
                                                     <InputLabel htmlFor="commentText">
                                                         Add a comment{" "}
