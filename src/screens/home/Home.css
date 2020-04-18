@@ -1,36 +1,42 @@
+/* css code for displaying the two post for each row */
 .post-card {
-    display: flex;
-    flex-wrap: wrap;
-    padding-left: 125px;
-    padding-right: 125px;
+    display: flex; /* display is flex */
+    flex-wrap: wrap; /* wrap */
+    padding-left: 125px; /* left side padding is 125px */
+    padding-right: 125px; /* right side padding is 125px */
 }
 
+/* css code for displaying image post card */
 .post {
-    width: 45%;
-    margin-left: 2.5%;
-    margin-right: 2%;
-    margin-top: 30px;
-    margin-bottom: 30px;
+    width: 45%; /* each image post card width is 45% of the screen width*/
+    margin-left: 2.5%; /* margin on left side is 2.5% */
+    margin-right: 2%; /* margin on right side is 2% */
+    margin-top: 30px; /* margin on top side is 30px */
+    margin-bottom: 30px; /* margin on bottom is 30px */
 }
 
+/* css code for the image inside card content */
 .image-post {
-   width: 100%;
+   width: 100%; /* image is going to take 100% width of the card */
 }
 
+/* css code for comment input box */
 .commentInputBox {
-    width: 89%;
-    margin-top: 10px;
+    width: 89%; /* width of the input field is 89% of the card width */
+    margin-top: 10px; /* margin on top side is 10px */
 }
 
+/* css code for horizontal rule below the card header */
 #horizontal {
-    margin-left: 0px;
-    margin-right: 0px;
-    margin-top: -10px;
-    margin-bottom: 15px;
-    color: rgb(223, 223, 223);
+    margin-left: 0px; /* left side margin is 0px */
+    margin-right: 0px; /* right side margin is 0px */
+    margin-top: -10px; /* top side margin is -10px */
+    margin-bottom: 15px; /* bottom side margin is 15px */
+    color: rgb(223, 223, 223); /* color rgb */
 }
 
+/* css code for comments to display */
 .commentBox-div {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 10px; /* top side margin 10px */
+    margin-bottom: 10px; /* bottom side margin 10px */
 }

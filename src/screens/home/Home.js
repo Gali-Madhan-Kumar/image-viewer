@@ -34,6 +34,7 @@ class Home extends Component {
 
     constructor(props) {
         super(props);
+        // If user tries to goto home page directlty without login then login page will be displayed
         if (sessionStorage.getItem('access-token') === null || sessionStorage.getItem('access-token') !== "8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784") {
             props.history.replace('/');
         }
@@ -48,10 +49,12 @@ class Home extends Component {
         }
     }
 
+    //calls after the page loads
     componentDidMount() {
 
         let that = this;
 
+        //data will be fetched from api's only after successfull login with correct access-token
         if (sessionStorage.getItem('access-token') !== null && sessionStorage.getItem('access-token') === "8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784") {
             let info = null;
             let xhr = new XMLHttpRequest();
@@ -80,7 +83,8 @@ class Home extends Component {
 
         this.mounted = true;
     }
-
+    
+    //method to change the postCreate time to DD/MM/YYYY HH:MM:SS
     postCreatedTime = (postCreatedTime) => {
 
         let createdTime = new Date();
@@ -96,7 +100,10 @@ class Home extends Component {
         let time = dd + "/" + mm + "/" + yyyy + " " + HH + ":" + MM + ":" + ss;
         return time;
     }
-
+    
+    // When user click the like button inside the image post then it increments the likes to +1 and if the user again clicks the like button then it's going to decrement the likes to -1
+    // takes to params photoId and postIndex
+    //user can like the post by searching the post using the caption or else he can directly like the post without searching
     onLikeButtonClickHandler = (photoId, postIndex) => {
 
         let listOfLikedPhotos = this.state.data;
@@ -140,6 +147,7 @@ class Home extends Component {
         }
     }
 
+    //method to display the user comments by directly without searching the post or by searching the post. user can comment in both the ways
     onCommentAddClickHandler = (photoId, username, postIndex) => {
         let comment = this.state.comment;
         if (comment === '') {
@@ -180,21 +188,25 @@ class Home extends Component {
         }
     }
 
+    //updates the comment value of state when user typing the comment inside the comment textbox
     onCommentValueHandler = (e) => {
         this.setState({
             comment: e.target.value,
         });
     }
 
+    //when the user clicks on the logout option inside the profile icon popover menu then access-token inside the session storage is going to remove and redirects to the login page
     onLogoutClickHandler = () => {
         sessionStorage.removeItem('access-token');
         this.props.history.push('/');
     }
 
+    //when user clicks on the my account option inside the profile icon popover menu then page redirects to /profile
     onMyProfileClickHandler = () => {
         this.props.history.push('/profile');
     }
 
+    //when user start typing inside search box then this method is going to call and updates the filtered results 
     onSearch = (e) => {
         const searchPost = (e.target.value).toLowerCase();
         let posts = this.state.data;
@@ -228,16 +240,20 @@ class Home extends Component {
                                         subheader={this.postCreatedTime(details.created_time)}
                                     />
                                     <CardContent>
+                                        {/* displays the image of the post  */}
                                         <div className="post-content">
                                             <img className="image-post" alt="" src={details.images.standard_resolution.url} /><br /><br />
                                             <hr id="horizontal" />
                                         </div>
+                                        {/* displays the caption of the post */}
                                         <div className="caption">
                                             <Typography component="p">
                                                 {details.caption.text.split(/#/)[0]}
                                             </Typography>
+                                            {/* displays the tags of the post with space separated */}
                                             {details.tags.map((tag, index) => <span key={"hash" + details.id + index}
                                                 className={classes.tags}>#{tag} </span>)}
+                                                {/* displays the like icon by default with favorate border when the user clicks it will change to red color */}
                                             <CardActions style={{ padding: 0, marginTop: 20, marginBottom: 10 }}>
                                                 <IconButton style={{ padding: 0 }} onClick={this.onLikeButtonClickHandler.bind(this, details.id, index)}>
                                                     {details.user_has_liked ?
@@ -246,11 +262,13 @@ class Home extends Component {
                                                         <Favorite style={{ color: 'red' }} />
                                                     }
                                                 </IconButton>
+                                                {/* displays total likes on right side of the like icon */}
                                                 <div className="likeCount">
                                                     <span >{details.likes.count} likes</span>
                                                 </div>
                                             </CardActions>
                                         </div>
+                                        {/* comments div is going to displaly the user comments */}
                                         <div className="commentBox-div">
                                             <Grid className="comments-grid">
                                                 <Grid >
@@ -263,6 +281,7 @@ class Home extends Component {
                                                 </Grid>
                                             </Grid>
                                         </div>
+                                        {/* input-comment is a textbox for a user to type the comment */}
                                         <div className="input-comment">
                                             <CardActions style={{ padding: 0 }}>
                                                 <FormControl className="commentInputBox" style={{ marginLeft: 0, }}>
