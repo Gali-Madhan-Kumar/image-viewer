@@ -70,7 +70,6 @@ const styles = theme => ({
         width: '50%',
     },
     addCommentBtn: {
-        width: '18%',
         marginTop: 12,
         marginLeft: '2%',
     },

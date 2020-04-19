@@ -2,8 +2,6 @@
 .post-card {
     display: flex; /* display is flex */
     flex-wrap: wrap; /* wrap */
-    padding-left: 125px; /* left side padding is 125px */
-    padding-right: 125px; /* right side padding is 125px */
 }
 
 /* css code for displaying image post card */
