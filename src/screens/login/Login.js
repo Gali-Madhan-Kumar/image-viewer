@@ -13,7 +13,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 const styles = {
     card: {
         padding: '60px',
-        width: '400px'
+        width: '30vw',
     },
     formControl: {
         width: '100%'
@@ -21,8 +21,8 @@ const styles = {
 }
 class Login extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             username: "",
             usernameRequired: "dispNone",
@@ -72,7 +72,9 @@ class Login extends Component {
     render() {
         return (
             <div>
+                {this.props.history.location.pathname === '/' ? <Header pathname={'/'}/> :
                 <Header />
+                }
                 <div className="login-card">
                     <Card style={styles.card}>
                         <CardContent>
