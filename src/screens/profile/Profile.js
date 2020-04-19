@@ -22,9 +22,6 @@ import Favorite from '@material-ui/icons/Favorite';
 import '../profile/Profile.css';
 
 const styles = theme => ({
-    detailsCard: {
-        boxShadow: 'none',
-    },
     avatar: {
         width: '50px',
         height: '50px',
@@ -306,80 +303,72 @@ class Profile extends Component {
         return (
             <div>
                 <Header userProfile={this.state.profilepicture} logout={this.onLogoutClickHandler} profilePage={this.state.isProfilePage} />
-                <div className="user-details">
-                    {/* user information card to display the profile picture, username, posts, follows and followed_by, and fullname and edit icon */}
-                    <Card className={classes.detailsCard}>
-                        <CardHeader style={{ paddingBottom: 0 }} avatar={
-                            <IconButton className={classes.userDetailsProfielIcon} onClick={this.onOpenProfilePicModalHandler}>
-                                <Avatar className={classes.avatar} src={this.state.profilepicture} />
-                            </IconButton>
-                        } title={
-                            <Typography variant="h5" component="h5" style={{ marginBottom: 5 }}>
-                                {this.state.username}
-                            </Typography>
-                        }
-                            subheader={
-                                <Grid container style={{ color: 'black' }} spacing={3} alignItems="center" justify="center">
-                                    <Grid item>
-                                        <Typography variant="subtitle2">
-                                            Posts: {this.state.media}
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item>
-                                        <Typography variant="subtitle2">
-                                            Follows: {this.state.follows}
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item>
-                                        <Typography variant="subtitle2">
-                                            Followed By: {this.state.followedBy}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
-                            } />
-                        <div>
-                            {/* modal to display when user clicks the profilepicture in information section */}
-                            <Modal open={this.state.isProfilePicModalOpen} onClose={this.onCloseProfilePicModalHandler}>
-                                <Card className={classes.profilePicModalCard}>
-                                    <CardContent>
-                                        <img className={classes.profilePicImage} src={this.state.profilepicture} alt="" />
-                                    </CardContent>
-                                </Card>
-                            </Modal>
-                        </div>
-                        <CardContent style={{ paddingTop: 0 }}>
-                            <Grid container alignItems="center" justify="center" spacing={2} style={{ marginLeft: 1 }}>
-                                <Grid item>
-                                    <Typography variant="subtitle1">
-                                        {this.state.fullname}
-                                    </Typography>
-                                </Grid>
-                                <Grid item>
-                                    {/* code for edit icon */}
-                                    <Fab style={{ width: 40, height: 40 }} color="secondary" aria-label="edit" onClick={this.editModalOpenHandler}>
-                                        <EditIcon />
-                                    </Fab>
-                                    {/* code for  edit fullname modal */}
-                                    <Modal open={this.state.isEditModalOpen} onClose={this.editModlaCloseHandler}>
-                                        <Card className={classes.editModalCard}>
-                                            <CardContent>
-                                                <Typography variant="h5" id="edit" className="modal-heading">Edit</Typography>
-                                                <FormControl required className="formControl" style={{ width: '100%' }}>
-                                                    <InputLabel htmlFor="username">Full Name</InputLabel>
-                                                    <Input id="fullname" type="text" onChange={this.fullNameChangeHandler} />
-                                                    <FormHelperText className={this.state.fullNameRequired}>
-                                                        <span className="red">required</span>
-                                                    </FormHelperText>
-                                                </FormControl><br /><br />
-                                                <Button variant="contained" id="update" color="primary" onClick={this.onUpdateClickHandler}>UPDATE</Button>
-                                            </CardContent>
-                                        </Card>
-                                    </Modal>
-                                </Grid>
+                {/* grid for displaying user information and user profile picture */}
+                <Grid style={{ margin: 0 }} container spacing={5} justify="center" alignItems="center">
+                    <Grid item style={{ marginRight: '5%' }}>
+                        <IconButton className={classes.userDetailsProfielIcon} onClick={this.onOpenProfilePicModalHandler}>
+                            <Avatar alt="" src={this.state.profilepicture} className={classes.avatar} />
+                        </IconButton>
+                    </Grid>
+                    <Grid item>
+                        <Typography variant="h6" component="h6">
+                            {this.state.username}
+                        </Typography>
+                        <Grid container spacing={3}>
+                            <Grid item>
+                                <Typography variant="subtitle2">
+                                    Posts: {this.state.media}
+                                </Typography>
                             </Grid>
+                            <Grid item>
+                                <Typography variant="subtitle2">
+                                    Follows: {this.state.follows}
+                                </Typography>
+                            </Grid>
+                            <Grid item>
+                                <Typography variant="subtitle2">
+                                    Followed By: {this.state.followedBy}
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                        <Grid container spacing={2} justify="flex-start" alignItems="center">
+                            <Grid item>
+                                <Typography variant="h6">{this.state.fullname}</Typography>
+                            </Grid>
+                            <Grid item>
+                                <Fab color="secondary" aria-label="Edit" style={{ width: 40, height: 40 }} onClick={this.editModalOpenHandler}>
+                                    <EditIcon />
+                                </Fab>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <div>
+                    {/* modal to display when user clicks the profilepicture in information section */}
+                    <Modal open={this.state.isProfilePicModalOpen} onClose={this.onCloseProfilePicModalHandler}>
+                        <Card className={classes.profilePicModalCard}>
+                            <CardContent>
+                                <img className={classes.profilePicImage} src={this.state.profilepicture} alt="" />
+                            </CardContent>
+                        </Card>
+                    </Modal>
+                </div>
+                {/* modal for editing the fullname */}
+                <Modal open={this.state.isEditModalOpen} onClose={this.editModlaCloseHandler}>
+                    <Card className={classes.editModalCard}>
+                        <CardContent>
+                            <Typography variant="h5" id="edit" className="modal-heading">Edit</Typography>
+                            <FormControl required className="formControl" style={{ width: '100%' }}>
+                                <InputLabel htmlFor="username">Full Name</InputLabel>
+                                <Input id="fullname" type="text" onChange={this.fullNameChangeHandler} />
+                                <FormHelperText className={this.state.fullNameRequired}>
+                                    <span className="red">required</span>
+                                </FormHelperText>
+                            </FormControl><br /><br />
+                            <Button variant="contained" id="update" color="primary" onClick={this.onUpdateClickHandler}>UPDATE</Button>
                         </CardContent>
                     </Card>
-                </div>
+                </Modal>
                 {/* code for displaying the imageposts of a user in grid */}
                 <div className={classes.imagesGrid}>
                     <GridList cellHeight={300} className={classes.gridList} cols={3}>
