@@ -23,7 +23,6 @@ import '../profile/Profile.css';
 
 const styles = theme => ({
     detailsCard: {
-        width: 400,
         boxShadow: 'none',
     },
     avatar: {
@@ -327,7 +326,7 @@ class Profile extends Component {
                                 <Avatar className={classes.avatar} src={this.state.profilepicture} />
                             </IconButton>
                         } title={
-                            <Typography variant="h5" component="h5" style={{ marginLeft: 18, marginBottom: 5 }}>
+                            <Typography variant="h5" component="h5" style={{ marginBottom: 5 }}>
                                 {this.state.username}
                             </Typography>
                         }
@@ -361,8 +360,8 @@ class Profile extends Component {
                             </Modal>
                         </div>
                         <CardContent style={{ paddingTop: 0 }}>
-                            <Grid container alignItems="center" spacing={2}>
-                                <Grid item style={{ marginLeft: 85 }}>
+                            <Grid container alignItems="center" justify="center" spacing={2} style={{ marginLeft: 1 }}>
+                                <Grid item>
                                     <Typography variant="subtitle1">
                                         {this.state.fullname}
                                     </Typography>
