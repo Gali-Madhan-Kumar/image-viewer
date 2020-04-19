@@ -2,6 +2,8 @@
 .post-card {
     display: flex; /* display is flex */
     flex-wrap: wrap; /* wrap */
+    padding-left: 125px;
+    padding-right: 125px;
 }
 
 /* css code for displaying image post card */
@@ -38,3 +40,10 @@
     margin-top: 10px; /* top side margin 10px */
     margin-bottom: 10px; /* bottom side margin 10px */
 }
+
+@media only screen and (max-width: 1024px) {
+    .post-card {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+  }
