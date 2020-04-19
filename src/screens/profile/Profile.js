@@ -87,7 +87,7 @@ class Profile extends Component {
     constructor(props) {
         super(props);
         //if the user tries to go to profile page without login then it will display the login page
-        if (sessionStorage.getItem('access-token') == null || sessionStorage.getItem('access-token') !== "8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784") {
+        if (sessionStorage.getItem('access-token') == null) {
             props.history.replace('/');
         }
         this.state = {
@@ -117,7 +117,7 @@ class Profile extends Component {
         let that = this;
 
         //api's get fetched only after successfull login 
-        if (sessionStorage.getItem('access-token') !== null && sessionStorage.getItem('access-token') === "8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784") {
+        if (sessionStorage.getItem('access-token') !== null && this.props.history.location.pathname === '/profile') {
             let info = null;
             let xhr = new XMLHttpRequest();
             xhr.addEventListener("readystatechange", function () {
