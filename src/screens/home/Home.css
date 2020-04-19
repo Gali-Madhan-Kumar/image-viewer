@@ -41,7 +41,8 @@
     margin-bottom: 10px; /* bottom side margin 10px */
 }
 
-@media only screen and (max-width: 1024px) {
+/* css code for screen width upto 745px */
+@media only screen and (max-width: 745px) {
     .post-card {
       padding-left: 0px;
       padding-right: 0px;
