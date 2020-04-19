@@ -53,7 +53,7 @@ class Header extends Component {
         return (
             <div>
                 {/* displays header without search box and profile icon in login page */}
-                {(sessionStorage.getItem('access-token') === null || this.props.pathname === '/'|| sessionStorage.getItem('access-token') !== "8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784" ?
+                {(sessionStorage.getItem('access-token') === null || this.props.pathname === '/' ?
                     <header className="app-header">
                         <span className="app-logo">Image Viewer</span>
                     </header>

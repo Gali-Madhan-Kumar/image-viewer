@@ -35,7 +35,7 @@ class Home extends Component {
     constructor(props) {
         super(props);
         // If user tries to goto home page directlty without login then login page will be displayed
-        if (sessionStorage.getItem('access-token') === null || sessionStorage.getItem('access-token') !== "8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784") {
+        if (sessionStorage.getItem('access-token') === null) {
             props.history.replace('/');
         }
         this.state = {
@@ -55,7 +55,7 @@ class Home extends Component {
         let that = this;
 
         //data will be fetched from api's only after successfull login with correct access-token
-        if (sessionStorage.getItem('access-token') !== null && sessionStorage.getItem('access-token') === "8661035776.d0fcd39.39f63ab2f88d4f9c92b0862729ee2784") {
+        if (sessionStorage.getItem('access-token') !== null && this.props.history.location.pathname === '/home') {
             let info = null;
             let xhr = new XMLHttpRequest();
             xhr.addEventListener("readystatechange", function () {
