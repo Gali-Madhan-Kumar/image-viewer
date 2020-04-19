@@ -23,7 +23,6 @@ import '../profile/Profile.css';
 
 const styles = theme => ({
     detailsCard: {
-        width: 400,
         boxShadow: 'none',
     },
     avatar: {
@@ -50,17 +49,6 @@ const styles = theme => ({
     gridList: {
         width: 1000,
     },
-    imagePostModalCard: {
-        display: 'flex',
-        position: "absolute",
-        width: 800,
-        backgroundColor: "white",
-        padding: 16,
-        outline: "none",
-        top: `50%`,
-        left: `50%`,
-        transform: `translate(-50%, -50%)`
-    },
     selectedImage: {
         width: '50%',
         backgroundSize: '100% 100%'
@@ -71,7 +59,6 @@ const styles = theme => ({
         width: '50%',
     },
     addCommentBtn: {
-        width: '18%',
         marginTop: 12,
         marginLeft: '2%',
     },
@@ -327,7 +314,7 @@ class Profile extends Component {
                                 <Avatar className={classes.avatar} src={this.state.profilepicture} />
                             </IconButton>
                         } title={
-                            <Typography variant="h5" component="h5" style={{ marginLeft: 18, marginBottom: 5 }}>
+                            <Typography variant="h5" component="h5" style={{ marginBottom: 5 }}>
                                 {this.state.username}
                             </Typography>
                         }
@@ -361,8 +348,8 @@ class Profile extends Component {
                             </Modal>
                         </div>
                         <CardContent style={{ paddingTop: 0 }}>
-                            <Grid container alignItems="center" spacing={2}>
-                                <Grid item style={{ marginLeft: 85 }}>
+                            <Grid container alignItems="center" justify="center" spacing={2} style={{ marginLeft: 1 }}>
+                                <Grid item>
                                     <Typography variant="subtitle1">
                                         {this.state.fullname}
                                     </Typography>
@@ -405,7 +392,7 @@ class Profile extends Component {
                     {this.state.selectedImagePost !== null ?
                         // code to display the image post modal when user clicks on the image post
                         <Modal open={this.state.isPostModalOpen} onClose={this.onImagePostClickCloseHandler}>
-                            <Card className={classes.imagePostModalCard}>
+                            <Card className="imagePostModalCard">
                                 {/* card media to display the image of post on left side of the modal */}
                                 <CardMedia
                                     className={classes.selectedImage}
@@ -461,7 +448,7 @@ class Profile extends Component {
                                                     </div>
                                                 </CardActions>
                                             </div>
-                                            <div>
+                                            <div className="commentInputDiv">
                                                 {/* code for comment input field inside image post modal */}
                                                 <FormControl className="formControl" style={{ width: '80%' }}>
                                                     <InputLabel htmlFor="commentText">

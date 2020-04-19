@@ -39,3 +39,31 @@
 .like-and-comment-div {
     margin-top: 175px; /* margin on top side is 175px */
 }
+
+/* css code for comment input text field */
+.commentInputDiv {
+    display: flex; /* display flex */
+}
+
+/* css code for displaying modal in the center of the page */
+.imagePostModalCard {
+    display: flex; /* diplay is flex */
+    position: absolute; /* position is absolute */
+    width: 60vw; /* width of the modal is 60% of total view width */
+    padding: 16px; /* padding 16px in all four sides */
+    outline: none; /* no outline */
+    top: 50%; /* top 50% space */
+    left: 50%; /* left 50% space */
+    transform: translate(-50%, -50%); 
+}
+
+/* css code for screen size from 480px to 715px */
+@media screen and (max-width: 715px) and (min-width: 480px) {
+    /* changes the modal width t0 90% of view width */
+    .imagePostModalCard {
+        width: 90vw;
+    }
+    .like-and-comment-div {
+        margin-top: 0px;
+    }
+}
