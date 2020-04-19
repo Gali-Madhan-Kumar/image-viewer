@@ -49,17 +49,6 @@ const styles = theme => ({
     gridList: {
         width: 1000,
     },
-    imagePostModalCard: {
-        display: 'flex',
-        position: "absolute",
-        width: 800,
-        backgroundColor: "white",
-        padding: 16,
-        outline: "none",
-        top: `50%`,
-        left: `50%`,
-        transform: `translate(-50%, -50%)`
-    },
     selectedImage: {
         width: '50%',
         backgroundSize: '100% 100%'
@@ -403,7 +392,7 @@ class Profile extends Component {
                     {this.state.selectedImagePost !== null ?
                         // code to display the image post modal when user clicks on the image post
                         <Modal open={this.state.isPostModalOpen} onClose={this.onImagePostClickCloseHandler}>
-                            <Card className={classes.imagePostModalCard}>
+                            <Card className="imagePostModalCard">
                                 {/* card media to display the image of post on left side of the modal */}
                                 <CardMedia
                                     className={classes.selectedImage}
@@ -459,7 +448,7 @@ class Profile extends Component {
                                                     </div>
                                                 </CardActions>
                                             </div>
-                                            <div>
+                                            <div className="commentInputDiv">
                                                 {/* code for comment input field inside image post modal */}
                                                 <FormControl className="formControl" style={{ width: '80%' }}>
                                                     <InputLabel htmlFor="commentText">

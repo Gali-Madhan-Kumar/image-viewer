@@ -39,3 +39,27 @@
 .like-and-comment-div {
     margin-top: 175px; /* margin on top side is 175px */
 }
+
+.commentInputDiv {
+    display: flex;
+}
+
+.imagePostModalCard {
+    display: flex;
+    position: absolute;
+    width: 60vw;
+    padding: 16px;
+    outline: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width: 715px) and (min-width: 480px) {
+    .imagePostModalCard {
+        width: 90vw;
+    }
+    .like-and-comment-div {
+        margin-top: 0px;
+    }
+  }
